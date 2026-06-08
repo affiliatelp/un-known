@@ -2440,11 +2440,19 @@ header.is-scrolled {
   .comparison-table th,
   .comparison-table td {
     padding: 20px 12px; 
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
   
   .comparison-table thead th.col-feature {
     border: 1px solid transparent;
+  }
+
+  .comparison-table thead th {
+    font-size: 0.7rem;
+  }
+
+  .comparison-table thead th.col-unknown {
+    font-size: 0.7rem;
   }
 
   /* siranui */
