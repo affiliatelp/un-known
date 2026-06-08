@@ -1968,8 +1968,6 @@ header.is-scrolled {
 
 
 
-
-
 /* ==========================================================================
    RESPONSIVE (スマートフォン対応: 768px以下)
    ========================================================================== */
@@ -2152,7 +2150,7 @@ header.is-scrolled {
 
   /* 共通重ねヘッダーのスマホ対応 */
   .services-container, .why-container, .cases-container {
-    padding: 60px 60px 80px;
+    padding: 60px 30px 80px;
   }
 
   .services-header-wrap, .why-header-wrap, .cases-header-wrap {
@@ -2227,7 +2225,7 @@ header.is-scrolled {
   }
 
   .contact-container {
-    padding: 60px;
+    padding: 60px 30px;
   }
 
   .chatbot-placeholder {
@@ -2754,4 +2752,10 @@ header.is-scrolled {
     padding-left: 0.9rem; /* スマホの文字サイズに合わせて字下げ幅も微調整 */
   }
 
+}
+
+@media (max-width: 460px) {
+  .hero-title {
+    font-size: 4rem;
+  }
 }
