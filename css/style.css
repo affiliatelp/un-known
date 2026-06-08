@@ -1,0 +1,2757 @@
+
+@charset "UTF-8";
+
+/* ==========================================================================
+   1. CSS変数の定義（共通カラー・フォント設定）
+   ========================================================================== */
+:root {
+  /* ご指定のカラープロパティ */
+  --color-text-main: #595858;   
+  --color-accent-red: #DD2D2D;  
+  
+  /* デザインシステムカラー */
+  --color-bg-white: #ffffff;
+  --color-bg-light-gray: #f9f9f9; 
+  --color-bg-footer: #EEECEA;     
+  --color-stat-green: #2D7D46;    
+  --color-text-muted: #888888; 
+  
+  /* 共通フォントファミリー */
+  --font-main: 'Noto Sans JP', 'Montserrat', sans-serif;
+  --font-serif: 'Noto Serif JP', serif; 
+}
+
+/* ==========================================================================
+   入れておくべき共通・ベーススタイル
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box; 
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%; 
+  scroll-behavior: smooth; 
+}
+
+html, body {
+  overflow-x: hidden; 
+}
+
+body {
+  font-family: var(--font-main);
+  color: var(--color-text-main);
+  line-height: 1.7;
+  letter-spacing: 0.05em;
+  background-color: var(--color-bg-white);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* リンクとホバーの共通設定 */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all 0.3s ease; 
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+/* 画像の基本リセット */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ボタン類のデフォルトリセット */
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* 共通パーツ：セクション見出し */
+.section-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-accent-red);
+  margin-bottom: 15px;
+  letter-spacing: 0.1em;
+}
+
+.section-h2 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-text-main);
+}
+
+/* スマホ専用改行の制御 */
+.sp-only {
+  display: none;
+}
+
+
+/* ==========================================================================
+   HEADER & NAVIGATION
+   ========================================================================== */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 30px 40px; 
+  
+  background-color: rgba(255, 255, 255, 0); 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0);   
+  
+  /* 滑らかにする（0.3秒で切り替わる） */
+  transition: padding 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* スクロールしたあとの状態*/
+header.is-scrolled {
+  padding: 15px 40px; 
+  background-color: rgba(255, 255, 255, 0.95); /* 白背景をフワッと出す */
+  backdrop-filter: blur(5px); /* 背景のすりガラス効果 */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);  
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.nav-logo-img {
+  height: 50px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.nav-links a {
+  font-size: 0.95rem;
+}
+
+.nav-cta {
+  border: 1px solid var(--color-accent-red);
+  color: var(--color-accent-red); 
+  padding: 8px 24px;
+  background-color: transparent;   /* 最初は背景を透明 */
+  transition: background-color 0.3s ease, color 0.3s ease; 
+}
+
+/* カーソルを当てたとき */
+.nav-cta:hover {
+  background-color: var(--color-accent-red); 
+  color: var(--color-bg-white); 
+  opacity: 1; 
+}
+
+.nav-hamburger, .mobile-menu {
+  display: none; /* PC時は非表示 */
+}
+
+
+/* ==========================================================================
+   HERO SECTION (思考回路をつくる。)
+   ========================================================================== */
+.hero-section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+}
+
+.hero-container {
+  display: flex;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero-left {
+  flex: 1.1;
+  padding-left: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+  z-index: 10;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(3.5rem, 8vw, 30rem);
+  font-weight: 300;
+  line-height: 1.25;
+  color: var(--color-text-main);
+  letter-spacing: 0.05em;
+  margin-right: -150px;
+  /* バラバラに改行されるのを防ぐ */
+  white-space: nowrap;  
+  word-break: keep-all; 
+}
+
+/* 1行目・2行目共通の初期状態（最初は透明で、少しだけ下に下げておく） */
+.title-line1,
+.title-line2 {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(15px); /* 15pxだけ下からスタート */
+  /* 1.2秒かけて、極上の緩急（cubic-bezier）で動かす */
+  animation: titleFadeIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* 1行目は、ページが開いて「0.2秒後」に動き出す */
+.title-line1 {
+  animation-delay: 0.2s;
+}
+
+/* 2行目は、1行目からさらに遅らせて「0.5秒後」に動き出す（この時間差が美しい！） */
+.title-line2 {
+  animation-delay: 0.5s;
+}
+
+/* アニメーションの設計図（下からフワッと浮き上がってクッキリ見える） */
+@keyframes titleFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0); /* 定位置に戻る */
+  }
+}
+
+
+.scroll-down {
+  position: absolute;
+  bottom: -40px;
+  left: 60px;
+  writing-mode: vertical-rl;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  color: var(--color-text-main);
+
+  display: flex;
+  align-items: center;
+}
+
+.scroll-down::after {
+  content: "";
+  display: block;
+  width: 14px;
+  height: 28px;
+  border: 1px solid var(--color-text-main);
+  border-radius: 10px;
+  margin-top: 15px;
+  position: relative;
+  /* カプセルの中にドット */
+  background: radial-gradient(circle 2px at center var(--dot-y, 6px), var(--color-accent-red) 100%, transparent 100%);
+  background-repeat: no-repeat;
+  animation: dotScroll 2s linear infinite !important;
+}
+
+@keyframes dotScroll {
+  0% {
+    background-position: center 4px;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    background-position: center 18px;
+    opacity: 0;
+  }
+}
+
+.hero-right {
+  flex: 0.9;
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 1;
+}
+
+.red-line {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 2.5px;
+  height: 400px;
+  background-color: var(--color-accent-red);
+  transform: rotate(33deg);
+  transform-origin: bottom left;
+  z-index: 5;
+}
+
+.hero-img-box {
+  width: 100%;
+  height: 100%;
+  min-width: 600px;
+  min-height: 480px;
+  background-color: var(--color-bg-light-gray);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* ==========================================================================
+   CONCEPT SECTION (導入の3行思考文)
+   ========================================================================== */
+.concept-section {
+  padding: 140px 20px;
+  background-color: var(--color-bg-white);
+}
+
+.concept-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-left: 60px;
+}
+
+.concept-lead-group {
+  margin-bottom: 40px;
+}
+
+.concept-lead {
+  font-size: clamp(1.1rem, 2.8vw, 1.85rem);
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+.concept-subtext {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 140px;
+}
+
+.message-main {
+  font-size: clamp(1.1rem, 2.3vw, 1.45rem);
+  margin-bottom: 15px;
+}
+.message-main span {
+  font-weight: 700;
+}
+
+
+/* ==========================================================================
+   ANALYSIS SECTION (その成長率は〜 赤い縦線の章)
+   ========================================================================== */
+.analysis-section {
+  padding: 100px 20px 140px;
+}
+
+.analysis-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-left: 60px;
+}
+
+.analysis-heading-box {
+  border-left: 2px solid var(--color-accent-red);
+  padding-left: 25px;
+  margin-bottom: 60px;
+}
+
+.analysis-title {
+  font-size: clamp(1.5rem, 3.5vw, 2.2rem);
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.analysis-body {
+  margin-bottom: 100px;
+}
+
+.analysis-text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 35px;
+  max-width: 780px;
+}
+
+.analysis-footer, .why-footer, .cases-footer {
+  text-align: right;
+  margin-top: 40px;
+}
+
+.analysis-footer-text, .why-footer-text, .cases-footer-text {
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+}
+.analysis-footer-text span, .why-footer-text span, .cases-footer-text span {
+  color: #ccc;
+  letter-spacing: -0.1em;
+}
+
+
+/* ==========================================================================
+   SERVICES SECTION (思考回路の実装に、3つの入口。)
+   ========================================================================== */
+
+
+.services-container, .why-container, .cases-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 100px 20px 140px;
+  position: relative;
+}
+
+.services-header-wrap, .why-header-wrap, .cases-header-wrap {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 100px;
+  min-height: 250px;
+}
+
+.services-header-left, .why-header-left, .cases-header-left {
+  flex: 1.1;
+  z-index: 10;
+}
+
+.services-header-right, .why-header-right, .cases-header-right {
+  flex: 0.9;
+  position: relative;
+  width: 100%;
+}
+
+.services-img-box, .why-img-box, .cases-img-box {
+  position: absolute;
+  top: -60px;
+  right: 0;
+  width: 100%;
+  height: 320px;
+  background-color: var(--color-bg-light-gray);
+  overflow: hidden;
+}
+.services-img, .why-img, .cases-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* サービス導入テキスト */
+.services-intro {
+  max-width: 800px;
+  margin-bottom: 100px;
+  padding-left: 60px;
+}
+.intro-lead {
+  font-size: 1.1rem;
+  margin-bottom: 35px;
+}
+.intro-points {
+  margin-bottom: 35px;
+}
+.intro-points p {
+  margin-bottom: 10px;
+}
+.intro-body {
+  margin-bottom: 35px;
+}
+.intro-footer {
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+/* 縦並びのサービスカード群 */
+.services-list {
+  border-top: 1px solid var(--color-bg-footer);
+}
+
+.service-card {
+  border-bottom: 1px solid var(--color-bg-footer);
+  border-left: 1px solid var(--color-bg-footer);
+  border-right: 1px solid var(--color-bg-footer);
+  padding: 60px 100px;
+  position: relative;
+  background-color: transparent;
+  transition: background-color 0.4s ease;
+}
+
+/* 赤線 */
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;                    
+  height: 2px;                
+  background-color: var(--color-accent-red); 
+  transition: width 0.4s ease; /* アニメーションの速度 */
+}
+
+
+
+/* ==========================================================================
+   カードにカーソルが当たったときの動き
+   ========================================================================== */
+.service-card:hover {
+  /* 背景 #FC2F37 の 3% */
+  background-color: rgba(252, 47, 55, 0.03); 
+}
+
+.service-card:hover::before {
+  /* カーソルが当たったら、上の赤線の長さを 100% に伸ばす */
+  width: 100%;
+}
+
+.service-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  margin-bottom: 30px; 
+}
+
+.service-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.35;
+  margin-bottom: 20px;
+}
+
+.service-lead-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.service-note-text {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
+
+.service-detail-text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  padding: 0 20px;
+}
+
+.service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 30px 0;
+}
+
+.service-tag {
+  font-size: 0.75rem;
+  border: 1px solid #ccc;
+  padding: 6px 14px;
+  color: var(--color-text-main);
+}
+
+.service-link-wrap {
+  grid-column: 2 / 3;
+  text-align: right;
+}
+
+.service-link {
+  font-size: 0.85rem;
+  color: var(--color-accent-red);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+
+/* ==========================================================================
+   WHY US SECTION (なぜ私たちか)
+   ========================================================================= */
+.why-list {
+  max-width: 900px;
+  margin-top: 40px;
+  margin-bottom: 80px;
+}
+
+.why-item {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 60px;
+  align-items: flex-start;
+}
+
+.why-item-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-accent-red);
+  padding-top: 4px;
+}
+
+.why-item-title {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.why-item-text {
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+
+/* ==========================================================================
+   CASE STUDY SECTION (実績・2カラムスタッツ)
+   ========================================================================== */
+.cases-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px 40px;
+  margin-bottom: 100px;
+}
+
+.case-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.case-meta {
+  margin-bottom: 25px;
+}
+
+.case-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.case-subtitle {
+  font-size: 1rem;
+}
+
+.case-stats {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--color-bg-footer);
+  padding-bottom: 30px;
+  margin-bottom: 25px;
+}
+
+.stat-box {
+  flex: 1;
+}
+.stat-box:first-child {
+  border-right: 1px solid var(--color-bg-footer);
+  padding-right: 20px;
+}
+.stat-box:last-child {
+  padding-left: 40px;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.stat-number {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.num-minus {
+  color: var(--color-accent-red);
+}
+
+.num-plus {
+  color: var(--color-stat-green);
+}
+
+.case-description {
+  font-size: 0.85rem;
+  color: var(--color-text-main);
+}
+
+
+/* ==========================================================================
+   CONTACT SECTION (お問い合わせ・ワークフロー)
+   ========================================================================== */
+.contact-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 120px 40px;
+}
+
+.contact-header {
+  margin-bottom: 40px;
+}
+
+.contact-intro {
+  font-size: 0.95rem;
+  line-height: 1.9;
+  margin-bottom: 60px;
+}
+
+/* チャットbotプレースホルダー */
+.chatbot-area {
+  max-width: 800px;
+  margin: 0 auto 80px;
+}
+
+.chatbot-placeholder {
+  width: 100%;
+  height: 400px;
+  border: 1px solid #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-white);
+}
+.chatbot-placeholder span {
+  font-size: 2.2rem;
+  color: var(--color-text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* contactボタン */
+.contact-more {
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+.contact-more-text {
+  font-size: 0.95rem;
+  margin-bottom: 25px;
+}
+
+.btn-contact-border {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  border: 1px solid var(--color-accent-red);
+  color: var(--color-accent-red);
+  padding: 12px 50px;
+  font-size: 0.95rem;
+}
+
+.section-divider {
+  border: none;
+  border-top: 1px solid var(--color-bg-footer);
+  margin-bottom: 100px;
+}
+
+/* 問い合わせ後の流れ */
+.workflow-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.workflow-main-title {
+  font-size: 1.6rem;
+  font-weight: 500;
+  margin-bottom: 60px;
+}
+
+.workflow-steps {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 80px;
+}
+
+.workflow-step {
+  flex: 1;
+}
+
+.step-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.1rem;
+  color: var(--color-text-muted);
+  display: block;
+  margin-bottom: 15px;
+}
+
+.step-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: var(--color-text-main);
+}
+
+.step-text {
+  font-size: 0.85rem;
+  line-height: 1.8;
+}
+
+.workflow-cta {
+  text-align: center;
+}
+
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 15px;
+  background-color: var(--color-accent-red);
+  color: var(--color-bg-white);
+  padding: 15px 50px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+
+/* ==========================================================================
+   FOOTER 
+   ========================================================================== */
+.footer {
+  background-color: var(--color-bg-footer);
+  width: 100%;
+}
+
+.footer-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 100px 80px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-info {
+  flex: 1;
+}
+
+.footer-logo-img {
+  height: 120px;
+  margin-bottom: 40px;
+}
+
+.footer-address {
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+.company-name {
+  margin-bottom: 15px;
+}
+
+.footer-nav {
+  flex: 1.5;
+  display: flex;
+  justify-content: space-around;
+}
+
+.footer-nav-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-accent-red);
+  margin-bottom: 30px;
+}
+
+.footer-nav-list li {
+  margin-bottom: 20px;
+}
+
+.footer-nav-list a {
+  font-size: 0.9rem;
+  color: var(--color-text-main);
+}
+
+/* ==========================================================================
+   service-agent.htmlのCSS
+   ========================================================================== */
+
+/* ==========================================================================
+   下層ページ共通・汎用ユーティリティ
+   ========================================================================== */
+/* 共通のフォントを太くするクラス */
+.fw-bold {
+  font-weight: 700 !important;
+}
+
+
+/* ==========================================================================
+   SUB HERO SECTION (上部グレー背景エリア)
+   ========================================================================== */
+.sub-hero {
+  background-color: var(--color-bg-footer); 
+  padding: 160px 0 120px;     
+}
+
+/* 共通のservices-header-left内の配置をこのセクション用に最適化 */
+.sub-hero .services-header-left {
+  max-width: 1400px;
+  margin: 0 auto 30px;
+  padding: 0 60px; 
+}
+
+/* タイトル下のリード文 */
+.sub-hero-lead {
+  font-size: 0.95rem;
+  color: var(--color-text-main);
+  margin-top: 30px;
+  letter-spacing: 0.05em;
+}
+
+
+/* ==========================================================================
+   SUB CONTENT SECTION (白い背景のメインコンテンツ)
+   ========================================================================== */
+.sub-content {
+  padding: 100px 0;
+  background-color: var(--color-bg-white);
+}
+
+/* テキストを読みやすくする中間サイズ（900px）コンテナ */
+.sub-content .container-medium {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px; 
+}
+
+/* 3行の導入テキスト */
+.sub-body-text {
+  margin-bottom: 80px; /* 下の赤いボックスとの間隔 */
+}
+
+.sub-body-text p {
+  font-size: 1.05rem;
+  line-height: 2;
+  margin-bottom: 25px; 
+  color: var(--color-text-main);
+}
+
+.sub-body-text p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* --- このサービスが向いている人（赤いボックス） --- */
+.target-box {
+  background-color: #c93a31; /* 画像に合わせた少し深みのある赤ベタ背景 */
+  padding: 50px 60px;        /* ボックス内側のゆったりした余白 */
+  color: var(--color-bg-white); /* 文字色をすべて白に */
+}
+
+.target-box-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 40px;      /* リストとの間隔 */
+  letter-spacing: 0.05em;
+}
+
+.target-box-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;                /* リスト項目同士の縦の隙間 */
+}
+
+/* 箇条書き（li）のデザイン調整 */
+.target-box-list li {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 28px;       /* 線の幅＋余白のスペースを左側に空ける */
+}
+
+/* 「―（線）」を再現 */
+.target-box-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;             
+  height: 1px;             
+  background-color: var(--color-bg-white); 
+}
+
+/* ==========================================================================
+   実例部分
+   ========================================================================== */
+.sub-practice {
+  background-color: var(--color-bg-footer);
+  padding: 120px 50px;
+  position: relative;
+}
+
+.container-large {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0px 60px;
+}
+
+/* トップページの共通パーツを流用しているため、ここでの個別指定は最小限に */
+.sub-practice .services-header-wrap {
+  margin-bottom: 60px;
+}
+
+/* タイトル内の「AIエージェント」部分を部分的に明朝体に変更 */
+.sub-practice .section-h2 span {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+/* 下部テキスト・リンクエリア（PCで横並び、スマホで縦並びのレイアウト） */
+.practice-body {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; /* テキストの最下部とリンクのラインを揃える */
+  gap: 60px;
+}
+
+/* 左側の文章グループ */
+.practice-text-group {
+  flex: 1;
+  max-width: 900px; /* テキストが横に広がりすぎて読みづらくなるのを防ぐ */
+}
+
+.practice-text-group p {
+  font-size: 0.95rem;
+  line-height: 2;
+  color: var(--color-text-main);
+}
+
+/* 右側の「詳しく見る」リンク */
+.practice-link-wrap {
+  flex-shrink: 0; /* 画面が狭まってもボタンが潰れないように固定 */
+}
+
+.practice-link {
+  font-size: 0.85rem;
+  color: var(--color-accent-red); /* 指定のアクセント赤（#DD2D2D） */
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.05em;
+}
+
+.practice-link span {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+/* 矢印リンク */
+.practice-link:hover span {
+  transform: translateX(5px);
+}
+
+/* ==========================================================================
+   制作プロセス
+   ========================================================================== */
+.sub-flow {
+  padding: 120px 60px;
+  background-color: var(--color-bg-white);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* セクションヘッダー（見出し）の余白調整 */
+.flow-header {
+  margin-bottom: 80px;
+}
+
+/* プロセスリストのコンテナ：一番上の項目の上にも薄い線を敷く */
+.flow-list {
+  border-top: 1px solid var(--color-bg-footer); /* 上部の境界線（#ebebeb） */
+  margin-bottom: 80px;
+}
+
+/* 各ステップのブロック：全体に下線をつけて padding でゆったり隙間を作る */
+.flow-item {
+  border-bottom: 1px solid var(--color-bg-footer); /* 下部の境界線 */
+  padding: 45px 0;
+  
+  display: flex;
+  align-items: flex-start; /* 数字とタイトルの頭揃え */
+  gap: 40px;               /* 数字と右側コンテンツの間隔 */
+}
+
+/* 左側の赤い数字 */
+.flow-item-num {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-accent-red); /* 指定の赤色（#DD2D2D） */
+  flex-shrink: 0;                /* 横幅が狭まっても数字が潰れないように固定 */
+  min-width: 30px;
+}
+
+/* 右側のコンテンツエリア */
+.flow-item-content {
+  flex: 1;
+}
+
+/* ステップのタイトル（要件ヒアリング など） */
+.flow-item-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+  margin-bottom: 25px; /* タイトルと下の説明文の間隔 */
+  letter-spacing: 0.05em;
+}
+
+/* ステップの説明文 */
+.flow-item-text {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--color-text-main);
+  max-width: 720px; /* 文字が右に広がりすぎるのを防いで読みやすく */
+}
+
+
+/* --- 最下部CTAボタンのエリア --- */
+.flow-cta {
+  text-align: center; /* ボタンを中央配置 */
+}
+
+/* 共通パーツ（.btn-submit）の見た目をこのセクション用に最適化 */
+.flow-cta .btn-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background-color: var(--color-accent-red);
+  color: var(--color-bg-white);
+  padding: 15px 55px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  transition: all 0.3s ease;
+}
+
+/* ボタンホバー時：少し色を暗くして、クリックできる感を演出 */
+.flow-cta .btn-submit:hover {
+  background-color: #b82323; /* 少し濃い赤に変化 */
+  opacity: 1; /* 共通の薄くなる設定をリセット */
+}
+
+/* ==========================================================================
+   service-consulting.html 追加分
+   ========================================================================== */
+
+/* 赤い縦線を引く */
+.diagnosis-check-list {
+  border-left: 2px solid var(--color-accent-red); /* 左側に指定の赤線（#DD2D2D）を引く */
+  padding-left: 30px;                             /* 線と文字の間の心地よい余白 */
+  display: flex;
+  flex-direction: column;
+  gap: 24px;                                      /* リスト項目同士の縦の隙間 */
+  margin-bottom: 70px;                            /* 下の解説テキストとの間隔 */
+}
+
+.diagnosis-check-list li {
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--color-text-main);
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+/* 下部の解説テキストブロック */
+.diagnosis-text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 45px; /* 2つの段落の間のゆったりした隙間 */
+}
+
+/* 「── これらをAIエージェントが〜」の文 */
+.diagnosis-lead {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--color-text-main);
+  letter-spacing: 0.05em;
+}
+
+/* 「感覚的にはおかしいと思っていたが〜」の文 */
+.diagnosis-desc {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--color-text-main);
+  letter-spacing: 0.05em;
+}
+
+/* ==========================================================================
+   service-operations.html 追加部分
+   ========================================================================== */
+.difference-body {
+  margin-top: 60px;
+  /* スマホやタブレットで画面幅が狭まったとき、表がはみ出さずに横スクロールできるようにするお守り */
+  overflow-x: auto; 
+  -webkit-overflow-scrolling: touch;
+}
+
+/* テーブル自体の基本設定 */
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse; /* 隣り合うセルの線を一本にまとめる */
+  background-color: var(--color-bg-white); /* セルの背景をすべて白に */
+  table-layout: fixed; /* 列の幅をガチッと固定して均等に綺麗に並べる */
+}
+
+/* 各列の横幅の比率を固定（合計100%） */
+.col-feature { width: 25%; }
+.col-general { width: 37.5%; }
+.col-unknown { width: 37.5%; }
+
+/* ヘッダーセル（th）と通常セル（td）の共通設定 */
+.comparison-table th,
+.comparison-table td {
+  border: 1px solid #dcdcdc; /* 画像にある薄いグレーのグリッド線 */
+  padding: 30px 24px;       /* セル内の上下・左右のゆったりした余白 */
+  font-size: 0.9rem;
+  line-height: 1.7;
+  text-align: center;       /* 文字を中央揃えに */
+  vertical-align: middle;   /* 文字の上下位置を中央に */
+  color: var(--color-text-main);
+}
+
+/* --- ヘッダー（1行目）の個別デザイン --- */
+.comparison-table thead th {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+/* 左上の空欄セルは、枠線も背景もなくして浮かせる */
+.comparison-table thead th.col-feature {
+  border: none;
+  background-color: transparent; /* 背景を透明にして、地層のグレーを出す */
+}
+
+/* 一般的な代理店のヘッダー */
+.comparison-table thead th.col-general {
+  background-color: var(--color-bg-white);
+}
+
+/* ★超重要：株式会社アンノウンのヘッダー（赤ベタ白文字） */
+.comparison-table thead th.col-unknown {
+  background-color: var(--color-accent-red); /* 指定の赤色（#DD2D2D） */
+  color: var(--color-bg-white);              /* 文字を白に */
+  border-color: var(--color-accent-red);     /* 枠線も赤にして一体化 */
+  font-weight: 700;
+}
+
+/* --- 2行目以降の個別デザイン --- */
+
+/* 左側の特徴ラベル列（入札戦略、担当者依存 など） */
+.comparison-table tbody td.cell-feature {
+  font-weight: 500;
+  background-color: var(--color-bg-white);
+}
+
+/* 一般的な代理店の中身 */
+.comparison-table tbody td.cell-general {
+  color: #777777; 
+}
+
+/* 株式会社アンノウンの中身 */
+.comparison-table tbody td.cell-unknown {
+  font-weight: 700;
+  color: #222222; 
+  background-color: rgba(252, 47, 55, 0.03); 
+}
+
+/* ==========================================================================
+   siranui.html
+   ========================================================================== */
+
+.section-siranui {
+  font-size: 3.5rem;
+}
+
+.siranui-text {
+  font-size: 1rem;
+  color: #777777;
+  margin-top: 20px;
+  letter-spacing: 0.05em;
+}
+
+.availability-text {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.siranui-body-text {
+  font-size: 1rem;
+  line-height: 2.5;
+}
+
+/* ファーストビュー全体の囲み */
+.siranui-hero {
+  background-color: var(--color-bg-white); /* 完全にクリーンな白背景 */
+  /* 上下に大胆な余白を取り、画像のような静かで洗練された空気感を作ります */
+  padding: 160px 0 120px 0; 
+}
+
+/* ファーストビュー内の見出し・リード文の縦並び調整 */
+.siranui-hero .services-header-left {
+  display: block; /* 縦に自然に流れるように設定 */
+}
+
+/* ★注目：siranuí のメインタイトル（ロゴライクな装飾） */
+.siranui-hero-title {
+  font-family: 'Montserrat', sans-serif; /* ご指定のMontserratを適用 */
+  font-size: 5.5rem;                     /* 画像のような圧倒的な存在感のあるサイズ */
+  font-weight: 500;                      /* 線の太さはスッキリと細めに（レギュラー） */
+  color: var(--color-text-main);                      
+  letter-spacing: -0.02em;               /* 文字と文字の間隔をわずかに引き締める */
+  line-height: 1.1;
+  margin-bottom: 45px;                   /* 下のリード文とのゆったりとした間隔 */
+}
+
+/* タイトルの中の「u」だけをピンポイントで赤く染める */
+.siranui-hero-title span {
+  color: var(--color-accent-red);        /* コーポレートカラーの赤（#DD2D2D） */
+  font-weight: 500;                      /* 赤い文字だけ、画像に合わせてわずかに太く強調 */
+}
+
+/* タイトルの下にあるサブリード文（正体不明でありながら〜） */
+.siranui-hero-lead {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--color-text-main);         /* 通常の本文カラー */
+  letter-spacing: 0.08em;                /* 日本語が美しく引き立つように文字間を広めに */
+  line-height: 1.8;
+}
+
+.container-large2 {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0px 60px;
+}
+
+/* エージェント一覧 */
+/* 見出し下の小さな注釈テキスト（検証中：社内または〜） */
+.agents-header-note {
+  font-size: 0.8rem;
+  color: #777777;           /* メインより少し薄いグレー */
+  margin-top: 20px;
+  letter-spacing: 0.05em;
+}
+
+/* 各エージェント項目の個別調整 */
+.agent-item {
+  padding: 40px 0; /* 制作プロセスの余白をベースに、一覧として見やすいよう少し微調整 */
+}
+
+/* ★注目：タイトルと[検証中]などのステータスを横並びにするヘッダー */
+.agent-item-header {
+  display: flex;
+  justify-content: space-between; /* タイトルを左、ステータスを右端にパキッと引き離す */
+  align-items: baseline;          /* 文字のベースライン（下端）を綺麗に揃える */
+  gap: 20px;
+  margin-bottom: 20px;            /* 下の説明文との間隔 */
+}
+
+/* 制作プロセスの共通タイトル設定を上書きしてマージンをリセット */
+.agent-item .flow-item-title {
+  margin-bottom: 0; 
+  font-size: 1.2rem;
+}
+
+/* ステータスラベル（[検証中] [設計中]）の共通設定 */
+.agent-status {
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  flex-shrink: 0; /* 画面が狭くなってもステータスが改行されて潰れないように固定 */
+}
+
+/* ステータスの色分け：[検証中] は鮮やかな赤 */
+.status-testing {
+  color: var(--color-accent-red); /* 指定の赤（#DD2D2D） */
+}
+
+/* ステータスの色分け：[設計中] は文字と同じ上品なグレー */
+.status-designing {
+  color: #777777;
+}
+
+/* 最下部の注意書きエリア（※ このリストは随時〜） */
+.agents-footer-note {
+  margin-top: 40px;
+}
+
+.agents-footer-note p {
+  font-size: 0.8rem;
+  line-height: 1.8;
+  color: #777777;
+  letter-spacing: 0.05em;
+}
+
+/* siranuiの利用について */
+/* 全体の囲み内の余白とテキストの微調整 */
+.siranui-availability-body {
+  margin-top: 60px;
+}
+
+/* ボタンエリアの配置を画像通りに「左寄せ」にコントロール */
+.siranui-availability-body .flow-footer {
+  text-align: left !important; /* 中央寄せの共通設定を確実に左寄せに上書き */
+  margin-top: 45px !important;
+}
+
+/* 共通ボタン（.btn-hero）をこのセクションのサイズ感に最適化 */
+.siranui-availability-body .btn-hero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent-red); /* コーポレートカラーの赤（#DD2D2D） */
+  color: var(--color-bg-white);
+  padding: 16px 35px;                         /* 画像のような横長の比率に調整 */
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+/* ボタンホバー時に少し深みのある赤に変化させる演出 */
+.siranui-availability-body .btn-hero:hover {
+  background-color: #b82323; 
+}
+
+
+/* ==========================================================================
+   about.html
+   ========================================================================== */
+
+/* 1. HTMLから追い出した見出し（タイトルラップ）の下マージン調整 */
+.sub-flow .services-header-wrap {
+  margin: 80px 0;
+}
+
+/* メインタイトル（Streamline the Complexity.）を美しい明朝体（セリフ体）に */
+.mission-title {
+  font-family: "Noto Serif JP", "Georgia", "YuMincho", "Hiragino Mincho ProN", serif;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* 3つのボックスを囲む親要素：CSS Gridで均等な3カラムを構築 */
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3等分でパキッと横並びに配置 */
+  border-right: 1px solid var(--color-border-light, #e0e0e0);  /* 共通の薄い線 */
+  border-bottom: 1px solid var(--color-border-light, #e0e0e0);
+  margin-top: 80px; /* 上の3行のリード文との間のしっかりとした空間 */
+  background-color: #ffffff;
+}
+
+/* 各カードの基本スタイル（外枠の線を引く） */
+.mission-card {
+  position: relative;
+  border-left: 1px solid var(--color-border-light, #e0e0e0);
+  border-top: 1px solid var(--color-border-light, #e0e0e0);
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+
+/* カードの内側の余白（画像のような正方形に近いゆったりした比率にする） */
+.mission-card-inner {
+  padding: 60px 40px;
+  text-align: center; /* 中身のテキストをすべて中央寄せに */
+}
+
+/* ★すべてのカード（mission-card）の上部に太い赤線を引く（疑似要素） */
+.mission-card::before {
+  content: "";
+  position: absolute;
+  top: -1px; /* 外枠の線とピッタリ重なるように調整 */
+  left: -1px;
+  right: 0;
+  height: 4px; /* 赤線の太さ */
+  background-color: var(--color-accent-red, #dd2d2d); /* 共通のアクセント赤 */
+  z-index: 2;  /* 表の薄いグレーの枠線の上に、赤線が綺麗に乗っかるようにする設定 */
+}
+
+/* 英語見出し（Re-solve など） */
+.mission-card-en {
+  display: block;
+  font-size: 1.1rem;
+  color: #777777; /* 少し薄めの洗練されたグレー */
+  margin-bottom: 20px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+}
+
+/* 日本語見出し（分解・整理・再構築） */
+.mission-card-ja {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-text-main, #333333);
+  margin-bottom: 35px;
+  letter-spacing: 0.1em;
+}
+
+/* 各カードの下部にある短い説明文 */
+.mission-card-text {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--color-text-sub, #555555);
+  letter-spacing: 0.05em;
+}
+
+.sub-flow-profile {
+  padding: 120px 60px;
+  background-color: var(--color-bg-white);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.sub-flow-profile .services-header-wrap {
+  display: flex;
+  align-items: flex-start;
+  min-height: 250px;
+}
+
+.sub-flow-mission {
+  padding: 120px 60px;
+  background-color: var(--color-bg-white);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+
+/* 会社概要 */
+.company-table-wrap {
+  margin-bottom: 90px;
+}
+
+.company-info-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; 
+}
+
+.sub-flow-company {
+  padding: 120px 60px;
+  background-color: var(--color-bg-white);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* 会社概要の横幅の比率を固定（項目名30%：中身70%） */
+.company-info-table th { width: 30%; }
+.company-info-table td { width: 70%; }
+
+/* テーブルの各セルの基本設定（枠線はあえて引かないクリーンな仕様） */
+.company-info-table th,
+.company-info-table td {
+  padding: 20px 0; /* 上下にゆとりを持たせ、左右の線はなくす */
+  font-size: 0.95rem;
+  line-height: 1.8;
+  text-align: left; /* すべて左寄せ */
+  vertical-align: top; /* 複数行になったときも上端で綺麗に揃える */
+}
+
+/* 左側の項目名（会社名、設立 など） */
+.company-info-table th {
+  font-weight: 500;
+  color: var(--color-text-main, #333333);
+}
+
+/* 右側の中身（テキスト部分） */
+.company-info-table td {
+  font-weight: 400;
+  color: var(--color-text-sub, #555555);
+}
+
+
+/* --- ロゴ解説エリアの左右2カラム装飾 --- */
+.logo-concept-wrap {
+  display: flex;
+  justify-content: space-between; /* テキストと画像を両端に引き離す */
+  align-items: flex-start;        /* 上端揃え */
+  gap: 60px;                      /* テキストと画像の間の心地よい隙間 */
+  margin-top: 40px;
+}
+
+/* 左側：テキストブロックの横幅調整 */
+.logo-concept-text {
+  flex: 1; /* 空いているスペースをいっぱいに使う */
+}
+
+/* 「ロゴについて」の見出し */
+.logo-concept-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-text-main, #333333);
+  margin-bottom: 30px;
+  letter-spacing: 0.05em;
+}
+
+/* ロゴの解説文 */
+.logo-concept-desc {
+  font-size: 0.95rem;
+  line-height: 2; /* MissionやCEO文と同じゆったりとした美しい行間 */
+  color: var(--color-text-sub, #555555);
+  letter-spacing: 0.05em;
+}
+
+/* 右側：ロゴ画像を入れる箱のサイズ固定 */
+.logo-concept-image-box {
+  width: 200px; /* 画像と同じくらいのサイズ感で固定 */
+  flex-shrink: 0; /* 画面が縮んでもロゴ画像が小さく潰されないように固定 */
+}
+
+/* ロゴ画像自体のレスポンシブ対応 */
+.logo-symbol-img {
+  width: 80%;
+  height: auto;
+  display: block;
+}
+
+/* ==========================================================================
+   recruit.html
+   ========================================================================== */
+
+.recruit-hero {
+    padding: 60px 20px !important;
+    width: 100%;
+  }
+
+/* 採用テキストの固有調整 */
+.recruit-body-text {
+  margin: 70px 30px 70px 0;
+  max-width: 520px;    
+}
+
+.recruit-body-text p {
+  font-size: 0.95rem;
+  line-height: 2; /* サイト共通のゆったりした美しい行間 */
+  color: var(--color-text-main, #333333);
+  letter-spacing: 0.05em;
+}
+
+/* Contactボタンの配置と微調整 */
+.recruit-btn-wrap {
+  text-align: left;
+}
+
+/* 共通の赤ボタン（.btn-hero）を画像通りのシャープな長方形に微調整 */
+.recruit-hero .btn-hero {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent-red, #dd2d2d);
+  color: #ffffff;
+  padding: 14px 45px; /* 画像のようなスッキリとした比率 */
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: background-color 0.3s ease;
+}
+
+.recruit-hero .btn-hero:hover {
+  background-color: #b82323; /* ホバー時に上品に深みのある赤へ */
+}
+
+/* 右側：画像ボックスの比率（デザインのグレー格子部分の存在感を再現） */
+.recruit-img-box {
+  margin-top: 150px;
+}
+
+.recruit-text {
+  line-height: 2.5;
+}
+
+
+
+
+/* ==========================================================================
+   CONTACT.html
+   ========================================================================== */
+
+.sub-flow-contact {
+  padding: 120px 60px;
+  background-color: var(--color-bg-white);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* フォーム全体のラッパー */
+.contact-form {
+  margin-top: 60px;
+}
+
+/* フォームの1行（項目＋入力欄）の並び */
+.form-group {
+  display: flex;
+  align-items: flex-start; /* 複数行の入力欄があっても上端で綺麗に揃える */
+  margin-bottom: 30px;     /* 行と行の間の隙間 */
+}
+
+/* 左側：項目名と必須バッジのエリア */
+.form-label-area {
+  width: 30%;             /* 項目名エリアの横幅を30%に固定 */
+  display: flex;
+  align-items: center;    /* 文字とバッジの上下中央を揃える */
+  justify-content: space-between; /* 項目名を左寄せ、必須バッジを右端にしてパキッと引き離す */
+  padding-right: 40px;    /* 入力欄との間の心地よい空間 */
+  padding-top: 14px;      /* 入力欄の厚みと文字の頭を美しく揃える微調整 */
+}
+
+/* 項目名のテキスト */
+.form-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text-main, #333333);
+}
+
+/* 必須ラベルバッジ */
+.form-badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 4px 12px;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.badge-required {
+  background-color: var(--color-accent-red, #dd2d2d); /* 共通のアクセント赤 */
+}
+
+/* 右側：入力欄のエリア */
+.form-input-area {
+  width: 70%; /* 入力エリアの横幅を70%に固定 */
+}
+
+/* 入力欄共通（input/textarea）のスタイル設定 */
+.input-field,
+.textarea-field {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--color-bg-footer, #f4f4f4); /* 画像のような上品な薄グレー背景 */
+  border: none;                                       /* 枠線をなくしてクリーンに */
+  padding: 16px;
+  font-size: 1rem;
+  color: var(--color-text-main, #333333);
+  font-family: inherit;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+/* 入力欄をクリックした時にほんの少し色を変えて分かりやすくする演出 */
+.input-field:focus,
+.textarea-field:focus {
+  background-color: #eaeaea; 
+}
+
+/* 問い合わせ内容用のテキストエリアの高さ */
+.textarea-field {
+  height: 200px;
+  resize: vertical; /* ユーザーが上下方向にのみサイズ変更できるようにする */
+}
+
+/* プライバシーポリシーリンクの配置 */
+.form-policy-link-wrap {
+  width: 70%;
+  margin-left: 30%; /* 入力欄の左端のスタートライン（70%エリア）にピタッと揃える */
+  margin-top: 25px;
+  margin-bottom: 50px;
+}
+
+.policy-link {
+  font-size: 0.9rem;
+  color: var(--color-text-main, #333333);
+  text-decoration: underline;
+  letter-spacing: 0.05em;
+}
+
+.policy-link:hover {
+  color: var(--color-accent-red, #dd2d2d); /* ホバー時に赤に変化 */
+}
+
+/* 送信ボタンエリア */
+.form-submit-wrap {
+  text-align: center;
+}
+
+/* 送信ボタン自体の装飾（共通の赤ボタンをベースにフォーム用に最適化） */
+.btn-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-accent-red, #dd2d2d);
+  color: #ffffff;
+  border: none;
+  padding: 14px 60px; /* 画像のようなスッキリした横長比率 */
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-submit:hover {
+  background-color: #b82323; /* ホバー時に深みのある赤へ */
+}
+
+/* ==========================================================================
+  PRIVACY.html
+   ========================================================================== */
+
+.privacy-section .services-header-wrap {
+  margin-bottom: 60px; /* タイトルから制定日までの絶妙な距離感 */
+}
+
+.sub-flow-privacy {
+  padding: 120px 60px;
+  background-color: var(--color-bg-white);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* 2. 右寄せの制定日・会社名エリア */
+.privacy-meta-wrap {
+  text-align: right;       
+  margin-bottom: 70px;     
+}
+
+.privacy-date,
+.privacy-company {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--color-text-main, #333333);
+  letter-spacing: 0.05em;
+}
+
+.privacy-date {
+  margin-bottom: 15px;     
+}
+
+/* 本文テキストエリアの調整 */
+.privacy-lead-text p {
+  font-size: 1rem;
+  line-height: 2;          /* サイト共通のゆったりと読みやすい2倍の行間 */
+  color: var(--color-text-main, #333333);
+  letter-spacing: 0.05em;
+  text-align: justify;     /
+}
+
+/* 「第1条」などのタイトル */
+.privacy-block-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text-main, #333333);
+  margin-bottom: 25px;
+  letter-spacing: 0.05em;
+}
+
+/* 条文の本文テキスト */
+.privacy-block-text p {
+  font-size: 1rem;
+  line-height: 2;
+  color: var(--color-text-main, #333333);
+  letter-spacing: 0.05em;
+  text-align: justify;
+}
+
+/* --- 5. 条文内の子項目・テーブルまわりの装飾 --- */
+.privacy-sub-item {
+  margin-top: 45px; /* 「1 【siranui】〜」の上の余白 */
+}
+
+/* 【siranui】の小さな見出し */
+.privacy-sub-title {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-text-main, #333333);
+  margin-bottom: 25px;
+  letter-spacing: 0.05em;
+}
+
+/* --- プライバシーポリシー専用テーブル --- */
+.privacy-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* 列の幅をガチッと固定して均等にする */
+  background-color: #ffffff;
+  margin-bottom: 20px;
+}
+
+/* テーブル各列の横幅比率（画像に近いバランス：項目30%：タイミング25%：目的45%） */
+.privacy-table .col-item { width: 30%; }
+.privacy-table .col-timing { width: 25%; }
+.privacy-table .col-purpose { width: 45%; }
+
+/* ヘッダーセル（th）とデータセル（td）の共通設定 */
+.privacy-table th,
+.privacy-table td {
+  border: 1px solid #bcbcbc; /* 画像にあるパキッとしたグレーの全網羅枠線 */
+  padding: 24px 20px;       /* 画像のような、文字がギュッと詰まりすぎないゆったり余白 */
+  font-size: 0.85rem;       /* 規約文なので、通常の本文より一回り小さくスマートに */
+  line-height: 1.7;
+  text-align: left;         /* ポリシー表はすべて「左寄せ」 */
+  vertical-align: top;      /* 複数行になっても頭が綺麗に揃う設定 */
+  color: var(--color-text-main, #333333);
+}
+
+/* テーブルのヘッダー行だけ少し文字を強調 */
+.privacy-table th {
+  font-weight: 700;
+  background-color: #ffffff; /* ヘッダー背景も白（または#fafafaなどお好みで） */
+}
+
+.privacy-block {
+  margin-top: 60px; 
+}
+
+/* --- 7. 第8条 お問い合わせ詳細の固有調整 --- */
+.privacy-contact-details {
+  margin-top: 30px; /* 上の文章との間の心地よい隙間 */
+}
+
+/* 箇条書きと住所などの行間を、画像のように少しコンパクトにして可読性を上げる */
+.privacy-contact-details p {
+  margin-bottom: 8px; /* 各行の間のスマートな隙間 */
+  font-size: 0.95rem;
+  line-height: 1.8; /* 住所や会社名がバラバラに見えないよう、1.8倍に引き締める */
+  color: var(--color-text-main, #333333);
+}
+
+/* 〒住所から始まる後半3行は、・がついていないので左側に少しだけ余白を入れてラインを揃える */
+.privacy-contact-details p:nth-child(3),
+.privacy-contact-details p:nth-child(4),
+.privacy-contact-details p:nth-child(5) {
+  padding-left: 1rem; /* 「・」の文字分、優雅に右にずらして文字頭を綺麗に美しく揃えるプロの技 */
+}
+
+/* メールアドレスのリンク装飾 */
+.privacy-contact-details a {
+  color: var(--color-text-main, #333333);
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.privacy-contact-details a:hover {
+  color: var(--color-accent-red, #dd2d2d); /* ホバーした時にコーポレートカラーの赤に */
+}
+
+
+
+
+
+
+/* ==========================================================================
+   RESPONSIVE (スマートフォン対応: 768px以下)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .sp-only {
+    display: block;
+  }
+  
+  header {
+    padding: 20px;
+  }
+  .nav-links {
+    display: none; /* 標準ナビ非表示 */
+  }
+
+  /* header */
+  header {
+    padding: 20px;
+  }
+  
+  .nav-links {
+    display: none; /* パソコン用のナビは非表示 */
+  }
+
+  /* ハンバーガーボタン */
+  .nav-hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 200; /* メニューより手前に配置 */
+    position: relative;
+    transition: opacity 0.3s ease; /* フワッと消えるアニメーション用 */
+  }
+
+  .nav-hamburger span {
+    display: block;
+    width: 100%;
+    height: 1.5px;
+    background-color: var(--color-text-main);
+  }
+
+  /* ★ モバイルメニュー（初期状態は画面の外に隠す、または非表示） */
+  .mobile-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--color-bg-white);
+    z-index: 150; /* 三本線(200)よりは下に置く */
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.4s ease;
+  }
+
+  /* 画像通りのシンプルな文字スタイル */
+  .mobile-menu a {
+    font-size: 1.4rem; /* 少し大きめでゆったり配置 */
+    font-weight: 300;  /* 細めのフォントで洗練された印象に */
+    color: var(--color-text-main);
+    letter-spacing: 0.1em;
+    display: block;
+    text-align: center;
+  }
+
+  /* 閉じるボタン（×）のスタイル（右上に配置） */
+  .mobile-menu .close-btn {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 2rem;
+    font-weight: 200;
+    color: var(--color-text-main);
+    cursor: pointer;
+  }
+
+  /* ==========================================================================
+     JavaScript連動用のクラス（メニューが開いたとき状態）
+     ========================================================================== */
+  /* body や .mobile-menu に「.is-open」というクラスがついた時に表示させる設定 */
+  .mobile-menu.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* メニューが開いている間は、三本線（ハンバーガー）を「非表示」にする */
+  /* JavaScriptで mobile-menu に is-open クラスがついたとき、その手前にある nav-hamburger を消す */
+  .mobile-menu.is-open ~ .nav, 
+  header:has(.mobile-menu.is-open) .nav-hamburger {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* クリックもできないようにする */
+  }
+
+
+  /* Hero */
+  .hero-title { 
+    font-size: 5rem;
+    text-align: left;
+    margin-right: 0 !important;       /* 右側へのはみ出し命令をリセット */
+    white-space: normal !important;   /* スマホでは画面端で自然に折り返せるように戻す */
+    word-break: break-all !important; /* 万が一の単語の突き破りも防止 */
+    
+    line-height: 1.3;
+  }
+
+
+  .hero-section {
+    min-height: 50vh;
+  }
+
+  .hero-container {
+    flex-direction: column-reverse;
+    padding: 0 20px;
+  }
+
+  .hero-left {
+    padding-left: 0;
+    margin-top: 40px;
+  }
+
+  .scroll-down {
+    position: static;
+    writing-mode: horizontal-tb;
+    margin-top: 40px;
+  }
+
+  .scroll-down::after {
+    margin-left: 8px;
+    margin-top: 0;
+  }
+
+  .hero-right {
+    min-height: auto;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hero-img-box {
+    width: 100%;
+    height: 320px;
+    min-height: auto;
+  }
+
+  .red-line {
+    left: 0;
+    height: 200px;
+  }
+
+  /* Concept / Analysis */
+  .concept-section {
+    padding: 80px 30px;
+  }
+
+  .concept-container, .analysis-container {
+    padding-left: 0;
+  }
+
+  .concept-subtext {
+    margin-bottom: 80px;
+  }
+
+  .analysis-section {
+    padding: 60px 30px 80px;
+  }
+
+  .analysis-body {
+    margin-bottom: 60px;
+  }
+
+  /* 共通重ねヘッダーのスマホ対応 */
+  .services-container, .why-container, .cases-container {
+    padding: 60px 60px 80px;
+  }
+
+  .services-header-wrap, .why-header-wrap, .cases-header-wrap {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .services-header-right, .why-header-right, .cases-header-right {
+    margin-top: 30px;
+  }
+
+  .services-img-box, .why-img-box, .cases-img-box {
+    position: static;
+    height: 220px;
+  }
+
+  /* Services */
+  .services-intro {
+    margin-bottom: 60px;
+    padding-left: 0px;
+  }
+
+  .service-card {
+    padding: 75px 30px;
+  }
+
+  .service-detail-text {
+    font-size: 0.8rem;
+  }
+
+  .service-lead-text {
+    font-size: 0.9rem;
+  }
+
+  .service-body {
+    padding-right: 0;
+  }
+
+  .service-tags {
+    grid-column: 1 / 2;
+    margin-bottom: 15px;
+  }
+
+  .service-link-wrap {
+    grid-column: 1 / 2;
+  }
+
+  /* Why */
+  .why-list {
+    margin-bottom: 40px;
+  }
+  .why-item {
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+
+  /* Cases */
+  .cases-list {
+    grid-template-columns: 1fr;
+    gap: 50px;
+    margin-bottom: 60px;
+    padding: 0 30px;
+  }
+
+  .stat-box:last-child {
+    padding-left: 20px;
+  }
+
+  /* Contact / Workflow */
+  .sub-flow-contact {
+    padding: 80px 60px;
+  }
+
+  .contact-container {
+    padding: 60px;
+  }
+
+  .chatbot-placeholder {
+    height: 300px;
+  }
+
+  .workflow-steps {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  /* Footer */
+  .footer-container {
+    flex-direction: column;
+    padding: 60px 40px;
+    gap: 50px;
+  }
+
+  .footer-logo-img {
+    margin-bottom: 20px;
+  }
+
+  .footer-nav {
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  .footer-nav-title {
+    margin-bottom: 15px;
+  }
+
+  .footer-nav-list li {
+    margin-bottom: 12px;
+  }
+
+  .sub-hero {
+    padding: 120px 0 60px;
+  }
+  
+  .sub-hero .services-header-left {
+    padding: 0 60px;
+  }
+
+  .sub-hero-lead {
+    font-size: 0.85rem;    
+    margin-top: 20px;
+  }
+  
+  .sub-content {
+    padding: 60px 0;
+  }
+  
+  .sub-content .container-medium {
+    padding: 0 60px;
+  }
+  
+  .sub-body-text p {
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+  }
+  
+  .target-box {
+    padding: 35px 25px; /* スマホではボックス内の余白を少しきゅっと狭める */
+  }
+  
+  .target-box-title {
+    margin-bottom: 25px;
+  }
+  
+  .target-box-list {
+    gap: 20px;
+  }
+  
+  .target-box-list li {
+    font-size: 0.85rem;
+  }
+
+  /*実例部分*/
+  .sub-practice {
+    padding: 60px 0px;
+  }
+
+  /* 親要素をFlexの縦並び・逆転（column-reverse）にして、画像を一番上へ！ */
+  .sub-practice .services-header-wrap {
+    display: flex;
+    flex-direction: column-reverse; 
+    gap: 25px;             /* 画像と、その下のテキストラベルとの間の隙間 */
+    margin-bottom: 40px;   /* セクション下部との隙間 */
+  }
+
+  /* PC版の横幅を100%に広げて、横並びを完全に解除 */
+  .sub-practice .services-header-left,
+  .sub-practice .services-header-right {
+    width: 100% !important;
+  }
+  
+  /* スマホ環境では、下のテキストと右下のリンクを縦並び（1カラム）に切り替える */
+  .practice-body {
+    flex-direction: column;
+    align-items: flex-start; /* 左寄せに揃える */
+    gap: 30px;
+  }
+  
+  .practice-text-group p {
+    font-size: 0.9rem;
+    line-height: 1.8;
+  }
+  
+  .practice-link-wrap {
+    width: 100%;
+    text-align: right; /* スマホではリンクを右下に寄せて余白のバランスを取る */
+  }
+
+  .sub-flow {
+    padding: 80px 60px;
+  }
+  
+  .flow-header {
+    margin-bottom: 50px;
+  }
+  
+  /* スマホでは数字とタイトルを少しきゅっと近づけてパディングを調整 */
+  .flow-item {
+    padding: 35px 0;
+    gap: 20px;
+  }
+  
+  .flow-item-num {
+    font-size: 1rem;
+    min-width: 25px;
+  }
+  
+  .flow-item-title {
+    font-size: 1.05rem;
+    margin-bottom: 15px;
+  }
+  
+  .flow-item-text {
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+  
+  .flow-list {
+    margin-bottom: 50px;
+  }
+  
+  /* スマホではボタンを画面幅に少し広げて押しやすく */
+  .flow-cta .btn-submit {
+    width: 100%;
+    max-width: 340px;
+    padding: 15px 20px;
+  }
+
+  /* 作成プロセス */
+  
+  /* スマホでは数字とタイトルを少しきゅっと近づけてパディングを調整 */
+  .flow-item {
+    padding: 35px 0;
+    gap: 20px;
+  }
+  
+  .flow-item-num {
+    font-size: 1rem;
+    min-width: 25px;
+  }
+  
+  .flow-item-title {
+    font-size: 1.05rem;
+    margin-bottom: 15px;
+  }
+  
+  .flow-item-text {
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+  
+  .flow-list {
+    margin-bottom: 50px;
+  }
+  
+  /* スマホではボタンを画面幅に少し広げて押しやすく */
+  .flow-cta .btn-submit {
+    width: 100%;
+    max-width: 340px;
+    padding: 15px 20px;
+  }
+
+  /* service-consulting.html 追加分 */
+  .diagnosis-check-list {
+    padding-left: 20px; /* スマホでは線と文字の間隔を少しきゅっと狭める */
+    gap: 18px;
+    margin-bottom: 50px;
+  }
+  
+  .diagnosis-check-list li {
+    font-size: 0.95rem;
+  }
+  
+  .diagnosis-text-block {
+    gap: 30px;
+  }
+  
+  .diagnosis-lead,
+  .diagnosis-desc {
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
+
+  /* service-operations.html 追加部分 */
+ 
+  
+  .comparison-table th,
+  .comparison-table td {
+    padding: 20px 12px; 
+    font-size: 0.8rem;
+  }
+  
+  .comparison-table thead th.col-feature {
+    border: 1px solid transparent;
+  }
+
+  /* siranui */
+  .section-siranui {
+    font-size: 2.7rem;
+  }
+
+  .siranui-text {
+    font-size: 0.85rem;
+  }
+
+  .siranui-body-text {
+    font-size: 0.8rem;
+  }
+
+
+  .siranui-hero {
+    /* スマホではヘッダー（ナビゲーション）とのバランスを見て余白を少し縮めます */
+    padding: 200px 0 10px 0;
+  }
+  
+  /* スマホ画面からはみ出さないよう、タイトルのサイズを最適化 */
+  .siranui-hero-title {
+    font-size: 3.5rem; /* スマホ用にきゅっとサイズダウン */
+    margin-bottom: 30px;
+  }
+  
+  .siranui-hero-lead {
+    font-size: 0.95rem; /* リード文もスマホで見やすいサイズに */
+    line-height: 1.7;
+  }
+
+  .agents-header-note {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-top: 15px;
+  }
+
+  /* siranui エージェント一覧*/
+  /* スマホ画面では横幅が足りなくなるため、タイトルとステータスを縦並びに切り替える */
+  .agent-item-header {
+    flex-direction: column;
+    align-items: flex-start; /* 左寄せに揃える */
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  
+  .agent-item .flow-item-title {
+    font-size: 1.05rem;
+  }
+  
+  .agent-status {
+    font-size: 0.9rem;
+  }
+  
+  .agents-footer-note {
+    margin-top: 30px;
+  }
+
+  /* about */
+  .company-table-wrap {
+    margin-bottom: 60px;
+  }
+
+  .sub-flow-mission {
+    padding: 80px 60px;
+  }
+
+  .mission-card-text {
+    font-size: 0.6rem;
+  }
+
+  .sub-flow-profile {
+    padding: 10px 60px;
+  }
+
+  /* スマホではテーブルを縦並びに切り替えて、文字が詰まるのを防ぐプロの技 */
+  .company-info-table th,
+  .company-info-table td {
+    display: block;
+    width: 100%;
+  }
+
+  .company-info-table th {
+    padding-bottom: 4px; /* 項目名の下だけきゅっと狭める */
+    font-size: 0.9rem;
+  }
+
+  .company-info-table td {
+    padding-top: 0;       /* 中身の上の余白を消す */
+    padding-bottom: 24px; /* 次の項目との間に余白を空ける */
+    font-size: 0.9rem;
+  }
+
+  .sub-flow-company {
+    padding: 5px 60px;
+  }
+  
+  /* スマホではロゴセクションを横並びから「縦並び」に切り替える */
+  .logo-concept-wrap {
+    flex-direction: column-reverse; /* 画像が下、テキストが上になる画像通りの配置 */
+    gap: 40px;
+  }
+
+  .logo-concept-title {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+  }
+
+  .logo-concept-desc {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    padding: 0 25px 40px;
+  }
+
+  /* スマホでのロゴ画像の配置調整（中央に置く） */
+  .logo-concept-image-box {
+    width: 160px;
+    margin: 0 auto; 
+  }
+
+  /* recruit */
+  .recruit-hero {
+    padding: 100px 0 80px 0;
+  }
+
+  .recruit-body-text {
+    margin: 50px 0 !important; 
+    max-width: 100%;
+  }
+
+  .recruit-body-text p {
+    font-size: 0.85rem;
+    line-height: 1.8;
+  }
+
+  /* スマホでは画像を上に、テキストを下に配置するか、通常の縦流れ（見出し→画像→本文）に自動で並べ替えます */
+  .recruit-hero .services-header-wrap {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 40px;
+  }
+
+  .recruit-hero .services-header-left {
+    width: 100%;
+  }
+  
+  .recruit-btn-wrap {
+    text-align: center;
+  }
+  
+  .recruit-hero .btn-hero {
+    width: 100%;
+    max-width: 340px; /* スマホでボタンが広がりすぎないように上限を固定 */
+    padding: 15px 20px;
+    font-size: 0.9rem;
+  }
+
+  .recruit-hero .services-header-right {
+    width: 100%;
+  }
+
+  .recruit-hero .services-header-right {
+    width: 100%;
+  }
+
+  .recruit-img-box {
+    margin-top: 0 !important; /* ★重要：PC版の150pxを消さないと、画像の上に謎の巨大な隙間ができてしまいます */
+  }
+
+
+
+
+  /* contact */
+  .contact-form {
+    margin-top: 40px;
+  }
+
+  /* スマホ環境では横幅が足りなくなるため、項目名と入力欄をすべて縦並びに切り替える */
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 25px;
+  }
+
+  .form-label-area {
+    width: 100%;
+    padding-right: 0;
+    padding-top: 0;
+    margin-bottom: 10px; /* 項目名と入力欄の間の隙間 */
+  }
+
+  .form-input-area {
+    width: 100%;
+  }
+
+  .input-field {
+    padding: 12px;
+  }
+
+  .textarea-field {
+    height: 160px;
+    padding: 12px;
+  }
+
+  /* スマホの時はポリシーリンクの左マージンをリセットして左端に揃える */
+  .form-policy-link-wrap {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 15px;
+    margin-bottom: 40px;
+  }
+
+  .btn-submit {
+    width: 100%;
+    max-width: 280px; 
+    font-size: 0.8rem;
+  }
+
+/* privacy */
+.privacy-section .services-header-wrap {
+    margin-bottom: 40px;
+  }
+
+  .sub-flow-privacy {
+    padding: 80px 60px;
+  }
+
+  .privacy-meta-wrap {
+    margin-bottom: 45px;   
+  }
+
+  .privacy-block-text p {
+    font-size: 0.8rem;
+  }
+
+  .privacy-date,
+  .privacy-company {
+    font-size: 0.8rem;
+  }
+  
+  .privacy-date {
+    margin-bottom: 8px;
+  }
+
+  .privacy-lead-text p {
+    font-size: 0.8rem;
+    line-height: 1.8;      
+  }
+
+  .privacy-block {
+    margin-top: 45px;
+  }
+
+  .privacy-block-title {
+    font-size: 1.05rem;
+    margin-bottom: 15px;
+  }
+
+  .privacy-sub-item {
+    margin-top: 35px;
+  }
+
+  .privacy-sub-title {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  /* スマホの狭い画面では、テーブルが潰れないように横スクロールを発生させます */
+  .privacy-table {
+    width: 100%;           
+    table-layout: fixed;     
+    margin-bottom: 20px;
+  }
+
+  .privacy-contact-details {
+    margin-top: 20px;
+  }
+  
+  .privacy-contact-details p {
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+  }
+
+  /* セル（マス目）のパディングと文字サイズをスマホ向けにきゅっと絞る */
+  .privacy-table th,
+  .privacy-table td {
+    padding: 12px 10px !important; /* PC版の24px/20pxを上書きして半分に */
+    font-size: 0.75rem !important; /* 文字を少し小さくしてセル内のゆとりを確保 */
+    line-height: 1.5;
+    
+    /* ★重要：英数字や長い文章が枠線を突き破らないように強制的に自動改行させるお守り */
+    word-break: break-all;
+    overflow-wrap: break-word;
+  }
+
+  /* スマホの縦長画面に合わせて、各列の比率を少し微調整（一番長い「目的」を広くする） */
+  .privacy-table .col-item { width: 25% !important; }
+  .privacy-table .col-timing { width: 25% !important; }
+  .privacy-table .col-purpose { width: 50% !important; }
+  
+  .privacy-contact-details p:nth-child(3),
+  .privacy-contact-details p:nth-child(4),
+  .privacy-contact-details p:nth-child(5) {
+    padding-left: 0.9rem; /* スマホの文字サイズに合わせて字下げ幅も微調整 */
+  }
+
+}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>Contact | un-known</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+
+    <link rel="canonical" href="ドメイン入れる">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Noto+Serif+JP:wght@300;400&display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+    <link rel="stylesheet" href="css/style.css">  
+  </head>
+
+  <body>
+    <!--header-->
+    <header>
+      <!-- NAVIGATION -->
+      <nav class="nav">
+        <a href="index.html" class="nav-logo">
+          <img src="img/logo1.png" alt="un-known" class="nav-logo-img">
+        </a>
+        <div class="nav-links">
+          <a href="index.html#services">service</a>
+          <a href="siranui.html">siranuí</a>
+          <a href="about.html">about</a>
+          <a href="https://note.com/adplatform_tiger">column</a>
+          <a href="recruit.html">recruit</a>
+          <a href="#contact" class="nav-cta">contact</a>
+        </div>
+        <div class="nav-hamburger" aria-label="メニュー">
+          <span></span><span></span><span></span>
+        </div>
+      </nav>
+
+      <!-- MOBILE MENU -->
+      <div class="mobile-menu">
+        <button class="close-btn" aria-label="閉じる">×</button>
+        <a href="#services">service</a>
+        <a href="siranui.html">siranuí</a>
+        <a href="about.html">about</a>
+        <a href="https://note.com/adplatform_tiger">column</a>
+        <a href="recruit.html">recruit</a>
+        <a href="#contact">contact</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="sub-flow-contact">
+        
+        <!-- 見出しエリア：全体幅のコンテナで左端を揃えます -->
+        <div class="flow-header">
+          <div class="services-header-wrap">
+            <div class="services-header-left">
+              <p class="section-label">Contact</p>
+              <h2 class="section-h2">お問い合わせ</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="container-medium">
+          
+          <!-- フォームの開始 -->
+          <form action="#" method="POST" class="contact-form">
+            
+            <!-- フォームの各行（項目名・必須ラベル・入力欄） -->
+            <div class="form-group">
+              <div class="form-label-area">
+                <label for="name" class="form-label">氏名</label>
+                <span class="form-badge badge-required">必須</span>
+              </div>
+              <div class="form-input-area">
+                <input type="text" id="name" name="name" required class="input-field">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label-area">
+                <label for="company" class="form-label">会社名</label>
+                <span class="form-badge badge-required">必須</span>
+              </div>
+              <div class="form-input-area">
+                <input type="text" id="company" name="company" required class="input-field">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label-area">
+                <label for="email" class="form-label">メールアドレス</label>
+                <span class="form-badge badge-required">必須</span>
+              </div>
+              <div class="form-input-area">
+                <input type="email" id="email" name="email" required class="input-field">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label-area">
+                <label for="message" class="form-label">問い合わせ内容</label>
+                <span class="form-badge badge-required">必須</span>
+              </div>
+              <div class="form-input-area">
+                <textarea id="message" name="message" required class="textarea-field"></textarea>
+              </div>
+            </div>
+
+            <!-- プライバシーポリシーへのリンク-->
+            <div class="form-policy-link-wrap">
+              <a href="privacy.html" class="policy-link">プライバシーポリシー</a>
+            </div>
+
+            <!-- 送信ボタンエリア-->
+            <div class="form-submit-wrap">
+              <button type="submit" class="btn-submit">送信</button>
+            </div>
+
+          </form>
+
+        </div> <!-- /container-medium -->
+      </section>
+
+    </main>
+
+    <!--footer-->
+    <footer class="footer">
+      <div class="footer-container">
+        
+        <div class="footer-info">
+          <!--ロゴ部分-->
+          <div class="footer-logo">
+            <img src="img/un-known-logo.svg" alt="un-known" class="footer-logo-img">
+          </div>
+          <div class="footer-address">
+            <p class="company-name">株式会社アンノウン</p>
+            <p class="zip-code">〒107-0052</p>
+            <p class="address-text">東京都港区赤坂 4-6-1</p>
+            <p class="building-name">THE MANOR HOUSE 5F</p>
+          </div>
+        </div>
+
+        <div class="footer-nav">
+          <div class="footer-nav-col">
+            <h3 class="footer-nav-title">Services</h3>
+            <ul class="footer-nav-list">
+              <li><a href="service-agent.html">AIエージェント企画・制作</a></li>
+              <li><a href="service-consulting.html">パフォーマンス改善<br>コンサルティング</a></li>
+              <li><a href="service-operations.html">運用代理業務</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-nav-col">
+            <h3 class="footer-nav-title">Company</h3>
+            <ul class="footer-nav-list">
+              <li><a href="siranui.html">siranuí</a></li>
+              <li><a href="about.html">about</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-nav-col">
+            <h3 class="footer-nav-title">Contact</h3>
+            <ul class="footer-nav-list">
+              <li><a href="recruit.html">採用情報</a></li>
+              <li><a href="contact.html">お問い合わせ</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+
+  </body>
+</html>
