@@ -182,6 +182,15 @@ header.is-scrolled {
   display: flex;
   align-items: center;
   padding-top: 100px;
+  overflow: hidden;
+}
+
+#top-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.5;
 }
 
 .hero-container {
