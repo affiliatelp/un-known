@@ -175,6 +175,13 @@ header.is-scrolled {
 /* ==========================================================================
    HERO SECTION (思考回路をつくる。)
    ========================================================================== */
+
+h1 {
+  font-weight: 400;
+  font-size: 2.5rem;
+    margin-bottom: 100px;
+}
+
 .hero-section {
   position: relative;
   width: 100%;
@@ -199,17 +206,247 @@ header.is-scrolled {
   max-width: 1400px;
   margin: 0 auto;
   position: relative;
+  z-index: 2;
+  padding: 0 60px;
+  justify-content: space-between;
+  height: 620px;
 }
 
 .hero-left {
-  flex: 1.1;
-  padding-left: 100px;
+  width: 80px;
+  flex-shrink: 0;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  position: relative;
-  z-index: 10;
+  align-items: flex-end; /* 画面下部に配置 */
+  height: 100%;
 }
+
+/* ライドする画像エリア（.hero-synapse-viewer）の設定 */
+.hero-synapse-viewer.hero-slide {
+  /* hero-containerと同じ横幅制限・中央揃え */
+  width: 100% !important;
+  max-width: 1400px !important;
+  height: 100% !important;
+  margin: 0 auto !important;
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* 左右レイアウト */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 100px 60px 60px;
+  /* 初期状態は非表示 */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s cubic-bezier(0.25, 1, 0.5, 1), visibility 1s ease;
+  z-index: 1;
+}
+
+/* 4. 【核心】スライドする最下部の文字エリアの設定 */
+.hero-bottom-ticker.hero-text-slide {
+  position: absolute !important;
+  bottom: 40px; /* 画面下部からの位置 */
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+  
+  /* 文字も最初は「完全に透明」にしておく */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease, visibility 1s ease;
+  z-index: 1;
+}
+
+.hero-bottom-ticker.hero-text-slide p {
+  font-family: var(--font-serif), serif;
+  font-size: clamp(4rem, 7vw, 7.5rem); 
+  font-weight: 300;
+  color: #ebebeb; 
+  letter-spacing: 0.1em;
+  width: 100%;
+  text-align: center;
+}
+
+/* ==========================================================================
+   ★JavaScript連動：is-active がついた組（画像・文字）だけを100%浮かび上がらせる
+   ========================================================================== */
+.hero-synapse-viewer.hero-slide.is-active,
+.hero-bottom-ticker.hero-text-slide.is-active {
+  opacity: 1 !important;
+  visibility: visible !important;
+  z-index: 5 !important; /* 前面に引っ張り出す */
+}
+
+
+
+/* ─── シナプス・ビューア（細胞の配置ベース） ─── */
+.hero-synapse-viewer {
+  width: 760px;
+  height: 620px;
+  position: relative;
+  margin-left: auto;
+  transition: opacity 1s ease;
+}
+
+.hero-section.slide-2-active .hero-container .hero-synapse-viewer {
+  opacity: 0;
+}
+
+/* すべての丸（細胞）に共通するベーススタイル */
+.synapse-bubble {
+  position: absolute;
+  border-radius: 50%;
+  overflow: hidden;
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+  /* じわっと浮き上がってくる上品なフェードイン */
+  opacity: 0;
+  transform: scale(0.9);
+  animation: bubblePop 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* 丸画像の中のimgタグの制御 */
+.synapse-bubble img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 各細胞の「位置・サイズ・背景色・出現ディレイ」の精密設計 */
+.bubble-img-1  { width: 140px; height: 140px; top: 70px;  left: 140px; animation-delay: 0.1s; }
+.bubble-gray-1 { width: 135px; height: 135px; top: 70px;  left: 300px; background-color: #f0f0f0; animation-delay: 0.3s; }
+.bubble-img-2  { width: 140px; height: 140px; top: 70px;  left: 455px; animation-delay: 0.2s; }
+.bubble-red-1  { width: 140px; height: 140px; top: 70px;  left: 615px; background-color: var(--color-accent-red, #dd2d2d); animation-delay: 0.5s; }
+
+.bubble-red-2  { width: 140px; height: 140px; top: 230px; left: 140px; background-color: var(--color-accent-red, #dd2d2d); animation-delay: 0.4s; }
+.bubble-img-3  { width: 142px; height: 142px; top: 230px; left: 300px; animation-delay: 0.3s; }
+.bubble-img-4  { width: 142px; height: 142px; top: 390px; left: 150px; animation-delay: 0.5s; }
+.bubble-gray-2 { width: 140px; height: 140px; top: 390px; left: 310px; background-color: #e6e6e6; animation-delay: 0.6s; }
+
+/* 【主役】右下の巨大な丸画像 */
+.bubble-img-main {
+  width: 320px;
+  height: 320px;
+  top: 230px;
+  left: 455px;
+  border: 4px solid #ffffff; /* 画像の周りの洗練された白いフチ */
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08); /* 浮かび上がらせる柔らかな影 */
+  animation-delay: 0.7s; /* 最後に大トリとして出現 */
+}
+
+/* 細胞がポンッと心地よく弾けて現れるアニメーション */
+@keyframes bubblePop {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ─── 最下部：流れる映画風の無限テキスト（ティッカー） ─── */
+.hero-bottom-ticker {
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.hero-section.slide-2-active .hero-bottom-ticker {
+  opacity: 0;
+}
+
+.hero-bottom-ticker p {
+  font-family: var(--font-serif), serif;
+  font-size: clamp(4rem, 7vw, 7.5rem); /* 圧倒的な存在感を放つ巨大文字 */
+  font-weight: 300;
+  color: #ebebeb; /* 背景に溶け込む極薄のグレー */
+  letter-spacing: 0.1em;
+  display: inline-block;
+  /* padding-left: 100%; */ 
+  /* animation: tickerLoop 25s linear infinite; */
+  width: 100%;         /* 横幅いっぱいに広げる */
+  text-align: right;
+}
+
+@keyframes tickerLoop {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-100%, 0, 0); }
+}
+
+
+
+/* ==========================================================================
+   SLIDE 2: siranuí 
+   ========================================================================== */
+
+/* 2組目：テキストエリア（左側） */
+.hero-slide .siranui-hero-content {
+  position: static;
+  max-width: 560px;
+  text-align: left;
+  z-index: 10;
+  flex-shrink: 0;
+  padding: 0 30px;
+}
+
+/* siranuí の巨大ロゴ */
+.siranui-hero-logo {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 5.5rem;
+  font-weight: 700;
+  color: #4a4a4a;
+  line-height: 1;
+  margin-bottom: 35px;
+  letter-spacing: -0.02em;
+}
+
+/* ロゴの「 i 」の点を赤にする演出 */
+.siranui-hero-logo span {
+  color: var(--color-accent-red, #dd2d2d);
+}
+
+/* リード文 */
+.siranui-hero-sub {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 25px;
+}
+
+/* 詳細文章 */
+.siranui-hero-desc {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: #666666;
+}
+
+/* 右側の画像エリア */
+.siranui-hero-graphic {
+  position: static;
+  width: 45%;
+  max-width: 550px;
+  height: auto;
+  z-index: 9;
+  flex-shrink: 0;
+}
+
+.siranui-hero-graphic img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+
 
 .hero-title {
   font-family: var(--font-serif);
@@ -1978,6 +2215,42 @@ header.is-scrolled {
 
 
 /* ==========================================================================
+   RESPONSIVE (タブレット対応: 1024px以下)
+   ========================================================================== */
+@media (max-width: 1024px) {
+
+  /* スライド2: siranuí - タブレット */
+  .hero-synapse-viewer.hero-slide {
+    padding: 100px 40px 60px;
+    gap: 30px;
+  }
+
+  .siranui-hero-logo {
+    font-size: 4rem;
+    margin-bottom: 25px;
+  }
+
+  .siranui-hero-sub {
+    font-size: 0.9rem;
+  }
+
+  .siranui-hero-desc {
+    font-size: 0.85rem;
+  }
+
+  .siranui-hero-graphic {
+    width: 40%;
+    max-width: 420px;
+  }
+
+  /* スライド1: シナプスビューアもタブレットで少し縮小 */
+  .hero-synapse-viewer {
+    transform: scale(0.92);
+    transform-origin: center top;
+  }
+}
+
+/* ==========================================================================
    RESPONSIVE (スマートフォン対応: 768px以下)
    ========================================================================== */
 @media (max-width: 768px) {
@@ -2095,28 +2368,81 @@ header.is-scrolled {
 
 
   .hero-section {
-    min-height: 50vh;
+    min-height: 100vh;
+    padding-top: 80px;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* バブル→XXXXX→Scroll Downの順で上から並べる */
   }
 
   .hero-container {
-    flex-direction: column-reverse;
-    padding: 0 20px;
+    flex-direction: column;
+    padding: 0 24px;
+    position: static; /* hero-leftのabsoluteをhero-sectionに対して適用するため */
+    height: auto; /* デスクトップの620px固定を解除してコンテンツ高さに追従させる */
+  }
+
+  /* スマホ版の細胞ビューア：上に移動 / スケールはJSが担当 */
+  .hero-synapse-viewer {
+    order: -1; /* Scroll Downより上に表示 */
+    margin-left: 0;
+    position: relative;
+  }
+
+  /* スマホの狭い画面幅に合わせて、それぞれの座標とサイズを比率計算で最適化 */
+  .bubble-img-1  { width: 140px; height: 140px; top: 70px;  left: 0px;   animation-delay: 0.1s; }
+  .bubble-gray-1 { width: 135px; height: 135px; top: 70px;  left: 155px; background-color: #f0f0f0; animation-delay: 0.3s; }
+  .bubble-img-2  { width: 140px; height: 140px; top: 70px;  left: 305px; animation-delay: 0.2s; }
+  .bubble-red-1  { width: 140px; height: 140px; top: 70px;  left: 460px; background-color: var(--color-accent-red, #dd2d2d); animation-delay: 0.5s; }
+
+  .bubble-red-2  { width: 140px; height: 140px; top: 230px; left: 0px;   background-color: var(--color-accent-red, #dd2d2d); animation-delay: 0.4s; }
+  .bubble-img-3  { width: 142px; height: 142px; top: 230px; left: 155px; animation-delay: 0.3s; }
+  .bubble-img-4  { width: 142px; height: 142px; top: 390px; left: 10px;  animation-delay: 0.5s; }
+  .bubble-gray-2 { width: 140px; height: 140px; top: 390px; left: 165px; background-color: #e6e6e6; animation-delay: 0.6s; }
+
+  /* 主役の巨大な丸も、スマホに完璧に収まるサイズに自動調整 */
+  .bubble-img-main {
+    width: 50%;
+    height: 50%;
+    top: 40%;
+    left: 50%;
+    border: 2px solid #ffffff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
   }
 
   .hero-left {
+    /* Scroll Downをhero-section下端に固定 */
+    position: absolute;
+    bottom: 30px;
+    left: 24px;
+    width: auto;
+    margin-top: 0;
     padding-left: 0;
-    margin-top: 40px;
   }
 
   .scroll-down {
     position: static;
-    writing-mode: horizontal-tb;
-    margin-top: 40px;
+    writing-mode: horizontal-tb; /* 縦書きから横書きに戻す */
+    display: inline-flex;
+    align-items: center;
   }
 
   .scroll-down::after {
     margin-left: 8px;
     margin-top: 0;
+  }
+
+  /* XXXXXXXXをバブルの下・Scroll Downの上にフロー配置 */
+  .hero-bottom-ticker {
+    position: static;
+    bottom: auto;
+    margin-top: 16px;
+    padding: 0 24px;
+  }
+  .hero-bottom-ticker p {
+    font-size: 2.8rem;
+    text-align: left;
   }
 
   .hero-right {
@@ -2767,6 +3093,48 @@ header.is-scrolled {
   .privacy-contact-details p:nth-child(4),
   .privacy-contact-details p:nth-child(5) {
     padding-left: 0.9rem; /* スマホの文字サイズに合わせて字下げ幅も微調整 */
+  }
+
+  /* =====================================================================
+     HERO SLIDE 2: siranuí - スマホ対応
+     ===================================================================== */
+
+  /* スライド2全体: 縦並び・テキスト上・画像下 */
+  .hero-synapse-viewer.hero-slide {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    justify-content: center !important;
+    padding: 90px 24px 40px !important;
+    gap: 20px !important;
+    max-width: 100% !important;
+  }
+
+  /* テキストエリア: 全幅 */
+  .hero-slide .siranui-hero-content {
+    max-width: 100%;
+  }
+
+  /* siranuí ロゴ */
+  .siranui-hero-logo {
+    font-size: 3rem;
+    margin-bottom: 16px;
+  }
+
+  .siranui-hero-sub {
+    font-size: 0.82rem;
+    margin-bottom: 16px;
+  }
+
+  .siranui-hero-desc {
+    font-size: 0.78rem;
+    line-height: 1.7;
+  }
+
+  /* 画像: 右下に小さく添える */
+  .siranui-hero-graphic {
+    width: 55%;
+    max-width: 220px;
+    align-self: flex-end;
   }
 
 }

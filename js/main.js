@@ -112,4 +112,54 @@ function initNeuralCanvas(canvasId) {
 
 initNeuralCanvas('top-canvas');
 
+// スマホでバブルビューアを画面幅に合わせて動的スケール
+// バブルのCSS座標は左600px×560pxの範囲に収まる設計
+function fitHeroViewer() {
+  const viewer = document.querySelector('.hero-container .hero-synapse-viewer');
+  if (!viewer) return;
+
+  if (window.innerWidth <= 768) {
+    const W = 600; // モバイルのバブル配置が収まる幅
+    const H = 560; // モバイルのバブル配置が収まる高さ
+    const leftPad = 24; // hero-containerの左パディング
+    const availW = window.innerWidth - leftPad;
+    const scale = Math.min(1, availW / W); // 1超え（拡大）を防ぐ
+
+    viewer.style.width           = W + 'px';
+    viewer.style.height          = H + 'px';
+    viewer.style.aspectRatio     = 'unset';
+    viewer.style.transform       = `scale(${scale})`;
+    viewer.style.transformOrigin = 'left top';
+    viewer.style.marginBottom    = `-${H * (1 - scale)}px`;
+  } else {
+    // デスクトップ：JSのインラインスタイルをリセットしてCSSに戻す
+    ['width','height','aspectRatio','transform','transformOrigin','marginBottom']
+      .forEach(p => { viewer.style[p] = ''; });
+  }
+}
+
+fitHeroViewer();
+window.addEventListener('resize', fitHeroViewer);
+
+// Hero carousel: 5秒ごとにスライド1 ⇄ スライド2を切り替える
+const heroSection = document.querySelector('.hero-section');
+const slide2 = document.querySelector('.hero-synapse-viewer.hero-slide');
+
+if (heroSection && slide2) {
+  let isSlide2Active = false;
+
+  function switchHeroSlide() {
+    isSlide2Active = !isSlide2Active;
+    if (isSlide2Active) {
+      heroSection.classList.add('slide-2-active');
+      slide2.classList.add('is-active');
+    } else {
+      heroSection.classList.remove('slide-2-active');
+      slide2.classList.remove('is-active');
+    }
+  }
+
+  setInterval(switchHeroSlide, 5000);
+}
+
 
