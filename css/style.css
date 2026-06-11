@@ -358,6 +358,7 @@ h1 {
   white-space: nowrap;
   pointer-events: none;
   transition: opacity 0.8s ease;
+  max-width: 1400px;
 }
 
 .hero-section.slide-2-active .hero-bottom-ticker {
@@ -395,7 +396,7 @@ h1 {
   text-align: left;
   z-index: 10;
   flex-shrink: 0;
-  padding: 0 30px;
+  padding: 0 80px;
 }
 
 /* siranuí の巨大ロゴ */
@@ -445,6 +446,165 @@ h1 {
   display: block;
 }
 
+
+
+/* ==========================================================================
+   SLIDE 2: RESULTS
+   ========================================================================== */
+
+.hero-slide-results .results-slide-content {
+  position: static;
+  max-width: 560px;
+  text-align: left;
+  z-index: 10;
+  flex-shrink: 0;
+  padding: 0 80px;
+}
+
+.results-slide-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 5.5rem;
+  font-weight: 700;
+  color: #4a4a4a;
+  line-height: 1;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+}
+
+.results-slide-title span {
+  color: var(--color-accent-red, #dd2d2d);
+}
+
+.results-slide-sub {
+  font-size: 0.85rem;
+  color: #666666;
+  margin-bottom: 28px;
+}
+
+.results-slide-desc {
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: #666666;
+  margin-bottom: 24px;
+}
+
+.results-metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.results-metric-label {
+  font-size: 0.78rem;
+  color: #888888;
+  margin-bottom: 4px;
+  letter-spacing: 0.03em;
+}
+
+.results-metric-value {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.results-positive {
+  font-size: 5rem;
+  color: #2a7a3b;
+}
+
+.results-negative {
+  font-size: 5rem;
+  color: var(--color-accent-red, #dd2d2d);
+}
+
+.hero-slide-results .results-slide-graphic {
+  position: static;
+  width: 45%;
+  max-width: 550px;
+  height: auto;
+  z-index: 9;
+  flex-shrink: 0;
+}
+
+.hero-slide-results .results-slide-graphic img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+
+/* ==========================================================================
+   SLIDE 3: SERVICE
+   ========================================================================== */
+
+.hero-slide-service .service-slide-content {
+  position: static;
+  max-width: 560px;
+  text-align: left;
+  z-index: 10;
+  flex-shrink: 0;
+  padding: 0 80px;
+}
+
+.service-slide-label {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 5.5rem;
+  font-weight: 700;
+  color: #4a4a4a;
+  line-height: 1;
+  margin-bottom: 30px;
+  letter-spacing: -0.02em;
+}
+
+.service-slide-label span {
+  color: var(--color-accent-red, #dd2d2d);
+}
+
+.service-slide-desc {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: #666666;
+  margin-bottom: 28px;
+}
+
+.service-slide-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.service-slide-list li {
+  font-size: 0.95rem;
+  color: #333333;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.service-slide-list li::before {
+  content: '— ';
+  color: #444444;
+}
+
+.hero-slide-service .service-slide-graphic {
+  position: static;
+  width: 45%;
+  max-width: 550px;
+  height: auto;
+  z-index: 9;
+  flex-shrink: 0;
+}
+
+.hero-slide-service .service-slide-graphic img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
 
 
@@ -2219,29 +2379,37 @@ h1 {
    ========================================================================== */
 @media (max-width: 1024px) {
 
-  /* スライド2: siranuí - タブレット */
+  /* スライド共通: 全スライド - タブレット */
   .hero-synapse-viewer.hero-slide {
     padding: 100px 40px 60px;
     gap: 30px;
   }
 
-  .siranui-hero-logo {
+  /* 大見出し（Results / SERVICE / siranuí）*/
+  .siranui-hero-logo,
+  .results-slide-title,
+  .service-slide-label {
     font-size: 4rem;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
-  .siranui-hero-sub {
-    font-size: 0.9rem;
-  }
-
-  .siranui-hero-desc {
-    font-size: 0.85rem;
-  }
-
-  .siranui-hero-graphic {
+  /* 右側画像エリア */
+  .siranui-hero-graphic,
+  .hero-slide-results .results-slide-graphic,
+  .hero-slide-service .service-slide-graphic {
     width: 40%;
     max-width: 420px;
   }
+
+  /* siranuí 固有 */
+  .siranui-hero-sub { font-size: 0.9rem; }
+  .siranui-hero-desc { font-size: 0.85rem; }
+
+  /* Results 固有 */
+  .results-metric-value { font-size: 2.4rem; }
+
+  /* SERVICE 固有 */
+  .service-slide-desc { font-size: 0.88rem; }
 
   /* スライド1: シナプスビューアもタブレットで少し縮小 */
   .hero-synapse-viewer {
@@ -3096,10 +3264,10 @@ h1 {
   }
 
   /* =====================================================================
-     HERO SLIDE 2: siranuí - スマホ対応
+     HERO SLIDE 共通: Results / SERVICE / siranuí - スマホ対応
      ===================================================================== */
 
-  /* スライド2全体: 縦並び・テキスト上・画像下 */
+  /* 全スライド: 縦並び・テキスト上・画像下 */
   .hero-synapse-viewer.hero-slide {
     flex-direction: column !important;
     align-items: flex-start !important;
@@ -3110,32 +3278,40 @@ h1 {
   }
 
   /* テキストエリア: 全幅 */
-  .hero-slide .siranui-hero-content {
+  .hero-slide .siranui-hero-content,
+  .hero-slide-results .results-slide-content,
+  .hero-slide-service .service-slide-content {
     max-width: 100%;
+    padding: 0 20px;
   }
 
-  /* siranuí ロゴ */
-  .siranui-hero-logo {
+  /* 大見出し（Results / SERVICE / siranuí）*/
+  .siranui-hero-logo,
+  .results-slide-title,
+  .service-slide-label {
     font-size: 3rem;
     margin-bottom: 16px;
   }
 
-  .siranui-hero-sub {
-    font-size: 0.82rem;
-    margin-bottom: 16px;
-  }
-
-  .siranui-hero-desc {
-    font-size: 0.78rem;
-    line-height: 1.7;
-  }
-
-  /* 画像: 右下に小さく添える */
-  .siranui-hero-graphic {
+  /* 右側画像: 右下に小さく添える */
+  .siranui-hero-graphic,
+  .hero-slide-results .results-slide-graphic,
+  .hero-slide-service .service-slide-graphic {
     width: 55%;
     max-width: 220px;
     align-self: flex-end;
   }
+
+  /* siranuí 固有 */
+  .siranui-hero-sub { font-size: 0.82rem; margin-bottom: 16px; }
+  .siranui-hero-desc { font-size: 0.78rem; line-height: 1.7; }
+
+  /* Results 固有 */
+  .results-metric-value { font-size: 2rem; }
+
+  /* SERVICE 固有 */
+  .service-slide-desc { font-size: 0.82rem; margin-bottom: 16px; }
+  .service-slide-list li { font-size: 0.82rem; }
 
 }
 

@@ -141,21 +141,32 @@ function fitHeroViewer() {
 fitHeroViewer();
 window.addEventListener('resize', fitHeroViewer);
 
-// Hero carousel: 5秒ごとにスライド1 ⇄ スライド2を切り替える
+// Hero carousel: 5秒ごとに synapse → Results → SERVICE → siranuí とサイクル
 const heroSection = document.querySelector('.hero-section');
-const slide2 = document.querySelector('.hero-synapse-viewer.hero-slide');
+const slideResults = document.querySelector('.hero-synapse-viewer.hero-slide-results');
+const slideService = document.querySelector('.hero-synapse-viewer.hero-slide-service');
+const slideSiranui = document.querySelector('.hero-synapse-viewer.hero-slide:not(.hero-slide-results):not(.hero-slide-service)');
 
-if (heroSection && slide2) {
-  let isSlide2Active = false;
+if (heroSection && slideResults && slideService && slideSiranui) {
+  let currentSlide = 0; // 0=synapse, 1=Results, 2=SERVICE, 3=siranuí
 
   function switchHeroSlide() {
-    isSlide2Active = !isSlide2Active;
-    if (isSlide2Active) {
+    currentSlide = (currentSlide + 1) % 4;
+
+    heroSection.classList.remove('slide-2-active');
+    slideResults.classList.remove('is-active');
+    slideService.classList.remove('is-active');
+    slideSiranui.classList.remove('is-active');
+
+    if (currentSlide === 1) {
       heroSection.classList.add('slide-2-active');
-      slide2.classList.add('is-active');
-    } else {
-      heroSection.classList.remove('slide-2-active');
-      slide2.classList.remove('is-active');
+      slideResults.classList.add('is-active');
+    } else if (currentSlide === 2) {
+      heroSection.classList.add('slide-2-active');
+      slideService.classList.add('is-active');
+    } else if (currentSlide === 3) {
+      heroSection.classList.add('slide-2-active');
+      slideSiranui.classList.add('is-active');
     }
   }
 
