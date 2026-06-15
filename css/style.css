@@ -235,7 +235,7 @@ h1 {
   /* 左右レイアウト */
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 100px 60px 60px;
   /* 初期状態は非表示 */
   opacity: 0;
@@ -282,6 +282,53 @@ h1 {
 }
 
 
+
+/* ─── Wiring the Mind ビューア（1枚目スライド） ─── */
+.hero-wiring-viewer {
+  position: relative;
+  flex: 1;
+  height: 100%;
+  overflow: visible;
+}
+
+.hero-wiring-img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60%;
+  height: 90%;
+  overflow: hidden;
+}
+
+.hero-wiring-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-wiring-text {
+  position: absolute;
+  bottom: -60px;
+  left: -10px;
+  font-family: 'Noto Serif JP', serif;
+  font-size: clamp(4rem, 8.5vw, 8.5rem);
+  font-weight: 500;
+  color: #3d3d3d;
+  line-height: 1.15;
+  z-index: 2;
+  letter-spacing: -0.02em;
+}
+
+.hero-wiring-text span {
+  color: var(--color-accent-red, #dd2d2d);
+}
+
+/* slide-2-active 時に wiring-viewer を非表示 */
+.hero-section.slide-2-active .hero-container .hero-wiring-viewer {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
 
 /* ─── シナプス・ビューア（細胞の配置ベース） ─── */
 .hero-synapse-viewer {
@@ -430,6 +477,25 @@ h1 {
   color: #666666;
 }
 
+/* 詳しく見るボタン */
+.siranui-hero-btn {
+  display: inline-block;
+  margin-top: 32px;
+  padding: 14px 32px;
+  border: 1.5px solid var(--color-accent-red, #dd2d2d);
+  color: var(--color-accent-red, #dd2d2d);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.siranui-hero-btn:hover {
+  background-color: var(--color-accent-red, #dd2d2d);
+  color: #ffffff;
+}
+
 /* 右側の画像エリア */
 .siranui-hero-graphic {
   position: static;
@@ -454,25 +520,36 @@ h1 {
 
 .hero-slide-results .results-slide-content {
   position: static;
+  width: 50%;
   max-width: 560px;
   text-align: left;
   z-index: 10;
   flex-shrink: 0;
-  padding: 0 80px;
+  padding: 0 0 0 70px;
+  box-sizing: border-box;
+}
+
+.results-slide-heading {
+  position: relative;
+  margin-bottom: 12px;
 }
 
 .results-slide-title {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 5.5rem;
-  font-weight: 700;
-  color: #4a4a4a;
+  font-family: Noto Serif JP;
+  font-size: clamp(4rem, 8vw, 6rem);
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.12);
   line-height: 1;
-  margin-bottom: 16px;
   letter-spacing: -0.02em;
 }
 
-.results-slide-title span {
-  color: var(--color-accent-red, #dd2d2d);
+.results-slide-ja {
+  position: absolute;
+  bottom: 0.1em;
+  left: 0.05em;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #555555;
 }
 
 .results-slide-sub {
@@ -485,26 +562,28 @@ h1 {
   font-size: 0.85rem;
   line-height: 1.8;
   color: #666666;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  padding-left: 50px;
 }
 
 .results-metrics {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
+  padding-left: 50px;
+  margin-bottom: 20px;
 }
 
 .results-metric-label {
   font-size: 0.78rem;
   color: #888888;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   letter-spacing: 0.03em;
 }
 
 .results-metric-value {
   font-family: 'Montserrat', sans-serif;
-  font-size: 3rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1;
   letter-spacing: -0.02em;
 }
@@ -519,6 +598,24 @@ h1 {
   color: var(--color-accent-red, #dd2d2d);
 }
 
+.results-hero-btn {
+  display: inline-block;
+  margin-left: 50px;
+  padding: 14px 32px;
+  border: 1.5px solid var(--color-accent-red, #dd2d2d);
+  color: var(--color-accent-red, #dd2d2d);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.results-hero-btn:hover {
+  background-color: var(--color-accent-red, #dd2d2d);
+  color: #ffffff;
+}
+
 .hero-slide-results .results-slide-graphic {
   position: static;
   width: 45%;
@@ -526,6 +623,7 @@ h1 {
   height: auto;
   z-index: 9;
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .hero-slide-results .results-slide-graphic img {
@@ -542,38 +640,48 @@ h1 {
 
 .hero-slide-service .service-slide-content {
   position: static;
+  width: 50%;
   max-width: 560px;
   text-align: left;
   z-index: 10;
   flex-shrink: 0;
-  padding: 0 80px;
+  padding: 0 0 0 70px;
+  box-sizing: border-box;
 }
 
-.service-slide-label {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 5.5rem;
-  font-weight: 700;
-  color: #4a4a4a;
+.service-slide-heading {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.service-slide-title {
+  font-family: Noto Serif JP;
+  font-size: clamp(4rem, 8vw, 6rem);
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.12);
   line-height: 1;
-  margin-bottom: 30px;
   letter-spacing: -0.02em;
 }
 
-.service-slide-label span {
-  color: var(--color-accent-red, #dd2d2d);
+.service-slide-ja {
+  position: absolute;
+  bottom: 0.1em;
+  left: 0.05em;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #555555;
 }
 
-.service-slide-desc {
-  font-size: 0.9rem;
-  line-height: 1.8;
+.service-slide-sub {
+  font-size: 0.85rem;
   color: #666666;
   margin-bottom: 28px;
 }
 
 .service-slide-list {
   list-style: none;
-  padding: 0;
-  margin-bottom: 25px;
+  padding-left: 50px;
+  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -591,6 +699,32 @@ h1 {
   color: #444444;
 }
 
+.service-slide-desc {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: #666666;
+  margin-bottom: 28px;
+  padding-left: 50px;
+}
+
+.service-hero-btn {
+  display: inline-block;
+  margin-left: 50px;
+  padding: 14px 32px;
+  border: 1.5px solid var(--color-accent-red, #dd2d2d);
+  color: var(--color-accent-red, #dd2d2d);
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.service-hero-btn:hover {
+  background-color: var(--color-accent-red, #dd2d2d);
+  color: #ffffff;
+}
+
 .hero-slide-service .service-slide-graphic {
   position: static;
   width: 45%;
@@ -598,6 +732,7 @@ h1 {
   height: auto;
   z-index: 9;
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .hero-slide-service .service-slide-graphic img {
@@ -608,33 +743,8 @@ h1 {
 
 
 
-.hero-title {
-  font-family: var(--font-serif);
-  font-size: clamp(3.5rem, 8vw, 30rem);
-  font-weight: 300;
-  line-height: 1.25;
-  color: var(--color-text-main);
-  letter-spacing: 0.05em;
-  margin-right: -150px;
-  /* バラバラに改行されるのを防ぐ */
-  white-space: nowrap;  
-  word-break: keep-all; 
-}
 
-/* 1行目・2行目共通の初期状態（最初は透明で、少しだけ下に下げておく） */
-.title-line1,
-.title-line2 {
-  display: inline-block;
-  opacity: 0;
-  transform: translateY(15px); /* 15pxだけ下からスタート */
-  /* 1.2秒かけて、極上の緩急（cubic-bezier）で動かす */
-  animation: titleFadeIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
 
-/* 1行目は、ページが開いて「0.2秒後」に動き出す */
-.title-line1 {
-  animation-delay: 0.2s;
-}
 
 /* 2行目は、1行目からさらに遅らせて「0.5秒後」に動き出す（この時間差が美しい！） */
 .title-line2 {
@@ -695,37 +805,7 @@ h1 {
   }
 }
 
-.hero-right {
-  flex: 0.9;
-  position: relative;
-  min-height: 70vh;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  z-index: 1;
-}
 
-.red-line {
-  position: absolute;
-  bottom: 0;
-  left: -10%;
-  width: 2.5px;
-  height: 400px;
-  background-color: var(--color-accent-red);
-  transform: rotate(33deg);
-  transform-origin: bottom left;
-  z-index: 5;
-}
-
-.hero-img-box {
-  width: 100%;
-  height: 100%;
-  min-width: 600px;
-  min-height: 480px;
-  background-color: var(--color-bg-light-gray);
-  position: relative;
-  overflow: hidden;
-}
 
 .hero-img {
   width: 100%;
@@ -1732,7 +1812,7 @@ h1 {
 .siranui-hero-title {
   font-family: 'Montserrat', sans-serif; /* ご指定のMontserratを適用 */
   font-size: 5.5rem;                     /* 画像のような圧倒的な存在感のあるサイズ */
-  font-weight: 500;                      /* 線の太さはスッキリと細めに（レギュラー） */
+  font-weight: 700;                      /* 線の太さはスッキリと細めに（レギュラー） */
   color: var(--color-text-main);                      
   letter-spacing: -0.02em;               /* 文字と文字の間隔をわずかに引き締める */
   line-height: 1.1;
@@ -1741,8 +1821,8 @@ h1 {
 
 /* タイトルの中の「u」だけをピンポイントで赤く染める */
 .siranui-hero-title span {
-  color: var(--color-accent-red);        /* コーポレートカラーの赤（#DD2D2D） */
-  font-weight: 500;                      /* 赤い文字だけ、画像に合わせてわずかに太く強調 */
+  color: var(--color-accent-red);       
+  font-weight: 700;                      /* 赤い文字だけ、画像に合わせてわずかに太く強調 */
 }
 
 /* タイトルの下にあるサブリード文（正体不明でありながら〜） */
@@ -2388,7 +2468,7 @@ h1 {
   /* 大見出し（Results / SERVICE / siranuí）*/
   .siranui-hero-logo,
   .results-slide-title,
-  .service-slide-label {
+  .service-slide-title {
     font-size: 4rem;
     margin-bottom: 20px;
   }
@@ -2399,6 +2479,16 @@ h1 {
   .hero-slide-service .service-slide-graphic {
     width: 40%;
     max-width: 420px;
+  }
+
+  /* 1枚目: Wiring the Mind - タブレット */
+  .hero-wiring-text {
+    font-size: clamp(3.5rem, 7.5vw, 7rem);
+  }
+
+  .hero-wiring-img {
+    width: 60%;
+    height: 58%;
   }
 
   /* siranuí 固有 */
@@ -2523,18 +2613,6 @@ h1 {
   }
 
 
-  /* Hero */
-  .hero-title { 
-    font-size: 5rem;
-    text-align: left;
-    margin-right: 0 !important;       /* 右側へのはみ出し命令をリセット */
-    white-space: normal !important;   /* スマホでは画面端で自然に折り返せるように戻す */
-    word-break: break-all !important; /* 万が一の単語の突き破りも防止 */
-    
-    line-height: 1.3;
-  }
-
-
   .hero-section {
     min-height: 100vh;
     padding-top: 80px;
@@ -2549,6 +2627,25 @@ h1 {
     padding: 0 24px;
     position: static; /* hero-leftのabsoluteをhero-sectionに対して適用するため */
     height: auto; /* デスクトップの620px固定を解除してコンテンツ高さに追従させる */
+  }
+
+  /* 1枚目: Wiring the Mind - スマホ */
+  .hero-wiring-viewer {
+    width: 100%;
+    height: calc(100svh - 160px);
+    flex: none;
+    order: -1;
+  }
+
+  .hero-wiring-img {
+    width: 68%;
+    height: 55%;
+  }
+
+  .hero-wiring-text {
+    font-size: clamp(2.6rem, 9vw, 3.6rem);
+    left: 0;
+    bottom: 0;
   }
 
   /* スマホ版の細胞ビューア：上に移動 / スケールはJSが担当 */
@@ -2611,23 +2708,6 @@ h1 {
   .hero-bottom-ticker p {
     font-size: 2.8rem;
     text-align: left;
-  }
-
-  .hero-right {
-    min-height: auto;
-    width: 100%;
-    justify-content: center;
-  }
-
-  .hero-img-box {
-    width: 100%;
-    height: 320px;
-    min-height: auto;
-  }
-
-  .red-line {
-    left: 0;
-    height: 200px;
   }
 
   /* Concept / Analysis */
@@ -3288,7 +3368,7 @@ h1 {
   /* 大見出し（Results / SERVICE / siranuí）*/
   .siranui-hero-logo,
   .results-slide-title,
-  .service-slide-label {
+  .service-slide-title {
     font-size: 3rem;
     margin-bottom: 16px;
   }
@@ -3316,7 +3396,18 @@ h1 {
 }
 
 @media (max-width: 460px) {
-  .hero-title {
-    font-size: 4rem;
+
+  /* 1枚目: Wiring the Mind - 小画面 */
+  .hero-wiring-viewer {
+    height: calc(100svh - 140px);
+  }
+
+  .hero-wiring-text {
+    font-size: 2.4rem;
+  }
+
+  .hero-wiring-img {
+    width: 72%;
+    height: 52%;
   }
 }
